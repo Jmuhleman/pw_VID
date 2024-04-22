@@ -29,3 +29,104 @@ number-sections: false
 editor: 
   visual
 ---
+
+
+
+
+
+
+description des données, 
+calligraphie, 
+précisions dans explications
+PAS d'ENGLISH
+
+
+
+
+
+
+
+
+
+
+
+# Exercice 1/
+
+## a  Calculer le coefficient de corrélation entre la taille et l'age.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+kalama <- read.table("kalama.txt", header = TRUE, sep = "", dec = ".")
+
+print(kalama)
+```
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+
+print(coeff_correlation <- cor(kalama$taille, kalama$age, method = "pearson"))
+
+```
+
+## b  Tracer le nuage de points taille versus age.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+plot(kalama)
+
+```
+
+## c Estimer les coefficients $\beta_{0}$ et $\beta_{1}$ par la méthode des moindres carrés. Enregistrer le résultat de l'ajustement du modèle dans l'objet kalama.lm de R.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+
+
+
+kalama.lm <- lm(age ~ taille, data=kalama)
+#par(mfrow=c(2,2), pty="s")
+#plot(kalama.lm, which=1:4)
+```
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+kalama.lm
+```
+
+Donc nous avons:
+
+$\beta_{0}$ = -100.842 et $\beta_{1}$ = 1.557
+
+## d Ajuster sur le graphique la droite des moindres carrés en utilisant la fonction abline().
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+
+coeff <- coefficients(kalama.lm)
+
+eq <- paste0("y = ", round(coeff[2], 1), " * x ", 
+            ifelse(coeff[1] >= 0, " + ", " - "), 
+            abs(round(coeff[1], 1)))
+
+plot(kalama$taille, kalama$age, main = eq, 
+     xlab = "Taille", ylab = "age") 
+
+abline(kalama.lm, col = "blue", lwd = 2)
+```
+
+## e Estimer la variance des erreurs σ2.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+#kalama.lm <- lm(age ~ taille, data=kalama)
+#par(mfrow=c(1,1), pty="s")
+#plot(kalama.lm, which=1)
+
+
+model_summary <- summary(kalama.lm)
+mse <- model_summary$sigma^2
+
+print(mse)
+```
+
+```{r}
+
+```
