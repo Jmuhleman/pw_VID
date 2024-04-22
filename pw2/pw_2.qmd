@@ -1,0 +1,31 @@
+---
+title: "Travail pratique VID"
+subtitle: "TP #2" 
+author:
+  - name: Julien Muhlemann
+    email: julien.muhlemann@heig-vd.ch
+    affiliations:
+      - name: Département TIC
+highlight-style: github
+format:
+  html:
+    theme: cosmo
+    monobackgroundcolor: rgb(255,230,240)
+    backgroundcolor: rgb(250,250,250)
+    toc: true
+    toc-location: left
+    #reference-location: margin
+    reference-location: document
+    code-line-numbers: true
+  pdf:
+    pdf-engine: pdflatex
+    toc: true
+    number-sections: false
+    colorlinks: true
+    
+date: 'last-modified'
+date-format: 'D MMMM, YYYY'
+number-sections: false
+editor: 
+  visual
+---

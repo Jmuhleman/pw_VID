@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Julien Muhlemann">
+
+<title>Travail pratique VID</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="pw1_VID_files/libs/clipboard/clipboard.min.js"></script>
+<script src="pw1_VID_files/libs/quarto-html/quarto.js"></script>
+<script src="pw1_VID_files/libs/quarto-html/popper.min.js"></script>
+<script src="pw1_VID_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="pw1_VID_files/libs/quarto-html/anchor.min.js"></script>
+<link href="pw1_VID_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="pw1_VID_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="pw1_VID_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="pw1_VID_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="pw1_VID_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="pw1_VID.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Travail pratique VID</h1>
+<p class="subtitle lead">TP #1</p>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Julien Muhlemann </p>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            Département TIC
+          </p>
+      </div>
+    </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 March, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Introduction</p>
+<p>Dans ce travail pratique, nous allons explorer l’utilisation du logiciel R pour l’analyse de données. À travers cet exercice, nous renforcerons nos compétences en analyse exploratoire et en visualisation de données, tout en apprenant à rédiger des rapports d’analyse clairs et concis.</p>
+<p>Guidés par des ressources pédagogiques disponibles, nous aurons l’opportunité de manipuler différents jeux de données et d’acquérir une meilleure compréhension des techniques statistiques utilisées en science des données.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-1_9fc727fe7d064a9401b7be191a87ee00">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(e1071)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Q1A:</p>
+<p>Voici le code permettant de charger les donnée des notes:<br>
+</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-2_eb5769f635a22274e3f228aedf101896">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>examen <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"Notes.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Q1B:</p>
+<p>Voici le code permettant d’afficher les boxplots:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-3_d22e00e2e2c47b649e2174c905f63624">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">pty=</span><span class="st">"s"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">boxplot</span>(Note <span class="sc">~</span> Classe, <span class="at">data =</span> examen, <span class="at">main =</span> <span class="st">"Notes de l'examen de mathématiques"</span>, <span class="at">xlab =</span> <span class="st">"Classe"</span>, <span class="at">ylab =</span> <span class="st">"Note"</span>, <span class="at">col =</span> <span class="st">"orange"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q1C:</p>
+<p>Il existe en effet une différence significative entre la classe ‘F’ et la classe ‘A’. L’intervalle de travail de la classe ‘F’ est beaucoup plus grand [1 ; 5.5] alors que la classe ‘A’ [2.5 ; 6] réussi un peu mieux son examen de mathématique. En conséquence la moyenne (donc la position) est plus élevée dans la classe ‘A’. Quant à la classe ‘B’ elle se trouve entre les deux autres avec une moyenne très proche de la classe ‘A’.</p>
+<p>Q1D:</p>
+<p>Oui en effet, nous pouvons utiliser un indicateur de dispersion tel que l’écart-type ou l’IQR avec la fonction IQR(). Nous pouvons voir que l’IQR est plus élevé pour la classe ‘F’. Attention il convient de garder en tête que nous avons ôté les valeur NA donc les jeux de données sont potentiellement non équilibrés.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-4_f48d1546bd6f6e6cb6d76cdc8fdebec1">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">print</span>(<span class="fu">IQR</span>(examen<span class="sc">$</span>Note[examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'A'</span>], <span class="at">na.rm =</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">print</span>(<span class="fu">IQR</span>(examen<span class="sc">$</span>Note[examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'B'</span>], <span class="at">na.rm =</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.05</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">print</span>(<span class="fu">IQR</span>(examen<span class="sc">$</span>Note[examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'F'</span>], <span class="at">na.rm =</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.5</code></pre>
+</div>
+</div>
+<p>Q1E:</p>
+<p>Les calculs des écarts-types selon le fonction sd et by. Oui il existe une différence entre les classes ‘F’ et les deux autres classes ‘A’ et ‘B’ comme décrit plus haut.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-5_a9a5a2b110bd0c397706aca1cc3d719f">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"STD A:"</span>, <span class="fu">sd</span>(examen<span class="sc">$</span>Note[examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'A'</span>], <span class="at">na.rm =</span><span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "STD A: 0.848528137423857"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"STD B:"</span>, <span class="fu">sd</span>(examen<span class="sc">$</span>Note[examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'B'</span>], <span class="at">na.rm =</span><span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "STD B: 1.00166528008778"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"STD F:"</span>, <span class="fu">sd</span>(examen<span class="sc">$</span>Note[examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'F'</span>], <span class="at">na.rm =</span><span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "STD F: 1.30986004341431"</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-6_385c9bd246c1c2dc86ecab88ec0b626a">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"STD A:"</span>, <span class="fu">by</span>(examen<span class="sc">$</span>Note, examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'A'</span>, sd, <span class="at">na.rm =</span> T)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "STD A: 1.21701769727137"  "STD A: 0.848528137423857"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"STD B:"</span>, <span class="fu">by</span>(examen<span class="sc">$</span>Note, examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'B'</span>, sd, <span class="at">na.rm =</span> T)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "STD B: 1.21287144531362" "STD B: 1.00166528008778"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"STD F:"</span>, <span class="fu">by</span>(examen<span class="sc">$</span>Note, examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'F'</span>, sd, <span class="at">na.rm =</span> T)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "STD F: 0.930970123098264" "STD F: 1.30986004341431" </code></pre>
+</div>
+</div>
+<p>Q1F.</p>
+<p>L’écart-type est un indicateur robuste de la dispersion des valeurs d’un dataset. Il convient comme déjà, dit de tenir compte du nombre d’observations entre les différentes classes.</p>
+<p>Q1G:</p>
+<p>Nous commençons par sélectionner la feature ‘Note’ de la classe ‘A’. Ensuite nous appelons la fonction summary().</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-7_388403212d0abef5c623fd5bcdf1e63b">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>distA <span class="ot">&lt;-</span> examen<span class="sc">$</span>Note[examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'A'</span>]</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">summary</span>(distA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   2.50    3.60    4.10    4.08    4.60    5.90       3 </code></pre>
+</div>
+</div>
+<p>Q1H:</p>
+<p>Nous utilisons la fonction skewness. Elle nous informe</p>
+<p>1. de la magnitude de l’asymétrie et</p>
+<p>2. du sens de celle-ci</p>
+<p>Nous obtenons un -0.588 ce qui nous donne une asymétrie négative de magnitude moyenne. L’histogramme nous le confirme.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-8_850dd09905964a04b19170bd83f16e0b">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">library</span>(e1071)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>distB <span class="ot">&lt;-</span> examen<span class="sc">$</span>Note[examen<span class="sc">$</span>Classe <span class="sc">==</span> <span class="st">'B'</span>]</span>
+<span id="cb24-3"><a href="#cb24-3"></a>distB <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(distB)</span>
+<span id="cb24-4"><a href="#cb24-4"></a></span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="fu">print</span>(<span class="fu">skewness</span>(distB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.5881639</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">print</span>(<span class="fu">hist</span>(distB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="960"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$breaks
+[1] 1 2 3 4 5 6
+
+$counts
+[1]  2  3  8 12  3
+
+$density
+[1] 0.07142857 0.10714286 0.28571429 0.42857143 0.10714286
+
+$mids
+[1] 1.5 2.5 3.5 4.5 5.5
+
+$xname
+[1] "distB"
+
+$equidist
+[1] TRUE
+
+attr(,"class")
+[1] "histogram"</code></pre>
+</div>
+</div>
+<p>Q1I: Les boîtes à moustaches mettent en valeur la dispersion des données IQR. Quant au diagramme de densité, il montre de manière plus claire le type de distribution et le mode. Le deux diagrammes sont intéressants lors de l’analyse. Néanmoins le diagramme en densité semble plus approprié pour l’exemple des notes.</p>
+<p>Q2A:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-9_ab6905924c13ad6b1311c005d30ede2a">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">data</span>(Titanic)</span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="fu">summary</span>(Titanic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of cases in table: 2201 
+Number of factors: 4 
+Test for independence of all factors:
+    Chisq = 1637.4, df = 25, p-value = 0
+    Chi-squared approximation may be incorrect</code></pre>
+</div>
+</div>
+<p>Q2B:</p>
+<p>Voici le code permettant d’afficher le graphique selon l’exemple: Nous avons donc dans la ‘formule’ les variable Class et Freq qui doivent être utilisées. Ensuite les variables conditionnelles Sex et Age qui vont permettre d’ajouter des en-têtes.</p>
+<p>Si l’argument Stack est = True alors nous obtenons plus qu’un seul histogramme par classe et boîte. Avec ce paramètre la comparaison n’est plus aussi aisée. Il peut être utilisé dans un cas ou la différence entre les valeurs à comparer n’est pas significative.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-10_d5202e8535cff5e22ccf8a8f7371a7e6">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>titanic.bar <span class="ot">&lt;-</span> <span class="fu">barchart</span>(Class<span class="sc">~</span>Freq <span class="sc">|</span> Sex <span class="sc">*</span> Age, <span class="at">data=</span><span class="fu">as.data.frame</span>(Titanic), </span>
+<span id="cb30-2"><a href="#cb30-2"></a>                      <span class="at">groups=</span>Survived, <span class="at">stack=</span>F, <span class="at">layout=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>), </span>
+<span id="cb30-3"><a href="#cb30-3"></a>                      <span class="at">auto.key=</span><span class="fu">list</span>(<span class="at">title=</span><span class="st">"Survived"</span>, <span class="at">columns=</span><span class="dv">2</span>))</span>
+<span id="cb30-4"><a href="#cb30-4"></a><span class="fu">print</span>(titanic.bar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q2C: 1. Oui il existe une différence significative entre les genre dans la catégorie Adulte. En effet les enfants ne présentent pas de différence notable entre les survivants vs décédés fille et garçons.</p>
+<ol start="2" type="1">
+<li><p>Oui il y a une différence significative entre les adultes et les enfants. En premier lieu il est à noter qu’il y avait plus d’individus adultes que enfants à bord. Ensuite, il y a eu beaucoup plus de décès chez les adultes que chez les enfants.</p></li>
+<li><p>Oui il y a eu (chez les adultes) proportionnellement à la représentation de l’échantillon de la classe, plus de décès chez chez l’équipage. Ensuite nous observons une diminution du nombre de morts en avançant vers les classes plus aisées.</p></li>
+<li><p>Interprétation: Les 3ème classes se situaient en fond de bâtiment et les cloisons ont été fermées afin de confiner la montée des eaux. En outre, leur probabilités de survie ont été diminuées.</p>
+<p>Source: https://abc13.com/titanic-anniversary-immigration-world-history/1874040/#:~:text=Approximately%201%2C317%20passengers%20died%20when,their%20area%20of%20the%20Titanic.</p></li>
+</ol>
+<p>Q2D: On pourrait envisager la présentation d’un histogramme par combinaison de genre et de sexe (4) avec deux bar-graphes par classes afin de comparer les survivants comme montré dans le graphe précédent.</p>
+<p>Q3A:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-11_b9d789804d06e1f9bb1036b20f300d54">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">library</span>(HSAUR2)</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">library</span>(tools)</span>
+<span id="cb31-3"><a href="#cb31-3"></a></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">"s"</span>)</span>
+<span id="cb31-5"><a href="#cb31-5"></a><span class="fu">plot</span>(plasma<span class="sc">$</span>fibrinogen, plasma<span class="sc">$</span>globulin,</span>
+<span id="cb31-6"><a href="#cb31-6"></a>     <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">main =</span> <span class="st">"Nuage de points : Globuline vs.Fibrinogène"</span>,</span>
+<span id="cb31-7"><a href="#cb31-7"></a>     <span class="at">xlab =</span> <span class="st">"Globuline"</span>,</span>
+<span id="cb31-8"><a href="#cb31-8"></a>     <span class="at">ylab =</span> <span class="st">"Fibrinogène"</span>,</span>
+<span id="cb31-9"><a href="#cb31-9"></a>     <span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q3B:</p>
+<p>Nous pouvons connaître la corrélation avec le code suivant: Nous obtenons 0.08 nous avons donc aucune linéarité entre les deux variables.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-12_12048c83b803aea101d7844e651661bf">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>correlation <span class="ot">&lt;-</span> <span class="fu">cor</span>(plasma<span class="sc">$</span>fibrinogen, plasma<span class="sc">$</span>globulin)</span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="fu">print</span>(correlation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.08071681</code></pre>
+</div>
+</div>
+<p>Q3C:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-13_12ebd566a564eb2f3b7f17dc6c870c1f">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>plasma.glm<span class="ot">&lt;-</span><span class="fu">glm</span>(ESR<span class="sc">~</span>fibrinogen<span class="sc">+</span>globulin, <span class="at">data=</span>plasma, <span class="at">family=</span>binomial)</span>
+<span id="cb34-2"><a href="#cb34-2"></a>prob<span class="ot">&lt;-</span><span class="fu">predict</span>(plasma.glm, <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">"s"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="fu">plot</span>(globulin<span class="sc">~</span>fibrinogen, <span class="at">data=</span>plasma, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">6</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">55</span>), <span class="at">pch=</span><span class="dv">20</span>, </span>
+<span id="cb34-5"><a href="#cb34-5"></a>     <span class="at">xlab=</span><span class="st">"fibrinogène"</span>, <span class="at">ylab=</span><span class="st">"globuline"</span>, <span class="at">main=</span><span class="st">""</span>)</span>
+<span id="cb34-6"><a href="#cb34-6"></a><span class="fu">symbols</span>(plasma<span class="sc">$</span>fibrinogen, plasma<span class="sc">$</span>globulin, <span class="at">circles=</span>prob, <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">fg=</span><span class="st">"red"</span>, </span>
+<span id="cb34-7"><a href="#cb34-7"></a>        <span class="at">bg=</span><span class="st">"orange"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Nous pouvons dire que plus les variables ont des valeurs élevées (fibrinogène et globuline) plus la probabilité semble élevée.</p>
+<p>Q4B:</p>
+<p>Nous pouvons calculer les corrélations avec le code suivant: Nous constatons que toutes les valeurs sont très similaires bien que le dataset soit très différent.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-14_4f323ff7ad7ff61e148456530591465c">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">data</span>(anscombe)</span>
+<span id="cb35-2"><a href="#cb35-2"></a></span>
+<span id="cb35-3"><a href="#cb35-3"></a></span>
+<span id="cb35-4"><a href="#cb35-4"></a></span>
+<span id="cb35-5"><a href="#cb35-5"></a>correlation_x1_y1 <span class="ot">&lt;-</span> <span class="fu">cor</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y1)</span>
+<span id="cb35-6"><a href="#cb35-6"></a>correlation_x2_y2 <span class="ot">&lt;-</span> <span class="fu">cor</span>(anscombe<span class="sc">$</span>x2, anscombe<span class="sc">$</span>y2)</span>
+<span id="cb35-7"><a href="#cb35-7"></a>correlation_x3_y3 <span class="ot">&lt;-</span> <span class="fu">cor</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y3)</span>
+<span id="cb35-8"><a href="#cb35-8"></a>correlation_x4_y4 <span class="ot">&lt;-</span> <span class="fu">cor</span>(anscombe<span class="sc">$</span>x4, anscombe<span class="sc">$</span>y4)</span>
+<span id="cb35-9"><a href="#cb35-9"></a></span>
+<span id="cb35-10"><a href="#cb35-10"></a><span class="fu">print</span>(correlation_x1_y1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8164205</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">print</span>(correlation_x2_y2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8162365</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">print</span>(correlation_x3_y3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8162867</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">print</span>(correlation_x4_y4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8165214</code></pre>
+</div>
+</div>
+<p>Q4C:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-15_ae19028bbedbc5c136790927e8e08801">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>anscombe<span class="fl">.1</span><span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">x1=</span>anscombe<span class="sc">$</span>x1, <span class="at">x4=</span>anscombe<span class="sc">$</span>x4, <span class="at">y1=</span>anscombe<span class="sc">$</span>y1, </span>
+<span id="cb43-2"><a href="#cb43-2"></a>                       <span class="at">y2=</span>anscombe<span class="sc">$</span>y2, <span class="at">y3=</span>anscombe<span class="sc">$</span>y3, <span class="at">y4=</span>anscombe<span class="sc">$</span>y4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Q4D:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-16_e2c574cf5750c9361d3971cf3c576a48">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb44-2"><a href="#cb44-2"></a></span>
+<span id="cb44-3"><a href="#cb44-3"></a>correlation_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(anscombe<span class="fl">.1</span>)</span>
+<span id="cb44-4"><a href="#cb44-4"></a><span class="fu">corrplot.mixed</span>(correlation_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q4E:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-17_624a96b2017d5697423f5757b69b02b1">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">library</span>(corrr)</span>
+<span id="cb45-2"><a href="#cb45-2"></a></span>
+<span id="cb45-3"><a href="#cb45-3"></a>correlation_matrix <span class="ot">&lt;-</span> <span class="fu">correlate</span>(anscombe<span class="fl">.1</span>)</span>
+<span id="cb45-4"><a href="#cb45-4"></a><span class="fu">network_plot</span>(correlation_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q4F:</p>
+<p>Nous pourrions envisager d’ajouter la ‘fit-line’ ou droite de régression afin de visualiser aussi où se trouvent les données par rapport à une régression.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-18_906207966e44230ba8169471d0dbc565">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb46-3"><a href="#cb46-3"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb46-4"><a href="#cb46-4"></a></span>
+<span id="cb46-5"><a href="#cb46-5"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
+<span id="cb46-6"><a href="#cb46-6"></a></span>
+<span id="cb46-7"><a href="#cb46-7"></a><span class="fu">ggpairs</span>(anscombe<span class="fl">.1</span>,</span>
+<span id="cb46-8"><a href="#cb46-8"></a>        <span class="at">lower=</span><span class="fu">list</span>(<span class="at">continuous=</span><span class="fu">wrap</span>(<span class="st">"points"</span>, <span class="at">alpha=</span><span class="fl">0.8</span>, <span class="at">colour=</span><span class="st">"#FF8247"</span>)),</span>
+<span id="cb46-9"><a href="#cb46-9"></a>        <span class="at">aspect=</span><span class="st">"iso"</span>,</span>
+<span id="cb46-10"><a href="#cb46-10"></a>        <span class="at">title=</span><span class="st">"Séries de Francis Anscombe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q4G:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-19_aa6a44027673a0437b6fbc36512736dc">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb47-3"><a href="#cb47-3"></a></span>
+<span id="cb47-4"><a href="#cb47-4"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>),<span class="at">pty=</span><span class="st">"s"</span>)</span>
+<span id="cb47-5"><a href="#cb47-5"></a></span>
+<span id="cb47-6"><a href="#cb47-6"></a><span class="fu">plot</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y1, <span class="at">pch=</span><span class="dv">21</span>, <span class="at">bg=</span><span class="st">"orange"</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">20</span>),</span>
+<span id="cb47-7"><a href="#cb47-7"></a></span>
+<span id="cb47-8"><a href="#cb47-8"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">14</span>))</span>
+<span id="cb47-9"><a href="#cb47-9"></a></span>
+<span id="cb47-10"><a href="#cb47-10"></a><span class="fu">plot</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y2, <span class="at">pch=</span><span class="dv">21</span>, <span class="at">bg=</span><span class="st">"orange"</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">20</span>),</span>
+<span id="cb47-11"><a href="#cb47-11"></a></span>
+<span id="cb47-12"><a href="#cb47-12"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">14</span>))</span>
+<span id="cb47-13"><a href="#cb47-13"></a></span>
+<span id="cb47-14"><a href="#cb47-14"></a><span class="fu">plot</span>(anscombe<span class="sc">$</span>x1, anscombe<span class="sc">$</span>y3, <span class="at">pch=</span><span class="dv">21</span>, <span class="at">bg=</span><span class="st">"orange"</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">20</span>),</span>
+<span id="cb47-15"><a href="#cb47-15"></a></span>
+<span id="cb47-16"><a href="#cb47-16"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">14</span>))</span>
+<span id="cb47-17"><a href="#cb47-17"></a></span>
+<span id="cb47-18"><a href="#cb47-18"></a><span class="fu">plot</span>(anscombe<span class="sc">$</span>x4, anscombe<span class="sc">$</span>y4, <span class="at">pch=</span><span class="dv">21</span>, <span class="at">bg=</span><span class="st">"orange"</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">20</span>),</span>
+<span id="cb47-19"><a href="#cb47-19"></a></span>
+<span id="cb47-20"><a href="#cb47-20"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">14</span>))</span>
+<span id="cb47-21"><a href="#cb47-21"></a></span>
+<span id="cb47-22"><a href="#cb47-22"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb47-23"><a href="#cb47-23"></a></span>
+<span id="cb47-24"><a href="#cb47-24"></a><span class="fu">legend</span>(<span class="fl">9.5</span>, <span class="dv">9</span>, <span class="st">"r = 0.82"</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q4H:</p>
+<p>Le premier graphe (corrplot.mixed) nous permet de visualiser les valeurs de corrélation ainsi qu’une représentation visuelle à l’aide de points. Et ceci, entre les paires de variable données.</p>
+<p>Le deuxième graphe (network plot) nous permet d’uniquement comparer les corrélation de manière visuelle. Nous disposons uniquement du graphe et ses connexions avec les magnitudes de celles-ci. Un graphe intéressant si nous désirons mettre en évidence uniquement les relations entre les variables sans surcharger la visualisation de valeurs.</p>
+<p>Le troisième graphe en matrice (scatter plot matrix) nous permet de voir à la fois la valeur du R^2 mais aussi le scatter plot de la combinaison de variables. la diagonale nous informe de la distribution des données. Nous devons regarder à quelle cellule correspond chaque paire valeur-scatter-plot ce qui peut être mal adapté pour une compréhension instantanée des données.</p>
+<p>Nous pourrions souhaiter afficher la corrélation directement dans la cellule et afficher un deuxième scatter-plot avec la même combinaison de variable mais de manière à inverser les abscisses et ordonnées.</p>
+<p>Le dernier graphe en matrice de 4 sous-graphes est intéressant par sa clarté. En effet, en affichant le R^2 au centre il est facilement compréhensible que cette information concerne tous les graphes.</p>
+<p>Q5A:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-20_8d888166a7e6e5623b0948089651ef64">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb48-4"><a href="#cb48-4"></a></span>
+<span id="cb48-5"><a href="#cb48-5"></a><span class="fu">skim</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">penguins</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">344</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">ordered</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: left;">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">species</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Ade: 152, Gen: 124, Chi: 68</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">island</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Bis: 168, Dre: 124, Tor: 52</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sex</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.97</td>
+<td style="text-align: left;">FALSE</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">mal: 168, fem: 165</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 9%">
+<col style="width: 13%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">bill_length_mm</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">43.92</td>
+<td style="text-align: right;">5.46</td>
+<td style="text-align: right;">32.1</td>
+<td style="text-align: right;">39.23</td>
+<td style="text-align: right;">44.45</td>
+<td style="text-align: right;">48.5</td>
+<td style="text-align: right;">59.6</td>
+<td style="text-align: left;">▃▇▇▆▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bill_depth_mm</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">17.15</td>
+<td style="text-align: right;">1.97</td>
+<td style="text-align: right;">13.1</td>
+<td style="text-align: right;">15.60</td>
+<td style="text-align: right;">17.30</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: left;">▅▅▇▇▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">flipper_length_mm</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">200.92</td>
+<td style="text-align: right;">14.06</td>
+<td style="text-align: right;">172.0</td>
+<td style="text-align: right;">190.00</td>
+<td style="text-align: right;">197.00</td>
+<td style="text-align: right;">213.0</td>
+<td style="text-align: right;">231.0</td>
+<td style="text-align: left;">▂▇▃▅▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">body_mass_g</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">4201.75</td>
+<td style="text-align: right;">801.95</td>
+<td style="text-align: right;">2700.0</td>
+<td style="text-align: right;">3550.00</td>
+<td style="text-align: right;">4050.00</td>
+<td style="text-align: right;">4750.0</td>
+<td style="text-align: right;">6300.0</td>
+<td style="text-align: left;">▃▇▆▃▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">year</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2008.03</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">2007.0</td>
+<td style="text-align: right;">2007.00</td>
+<td style="text-align: right;">2008.00</td>
+<td style="text-align: right;">2009.0</td>
+<td style="text-align: right;">2009.0</td>
+<td style="text-align: left;">▇▁▇▁▇</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Q5B:</p>
+<p>Nous nous apercevons que la variable ‘sex’ a 11 valeurs manquantes.</p>
+<p>Q5C:</p>
+<p>L’espèce la plus représentée comme nous indique le code ci-dessous est l’Adélie.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-21_f57cfd18b8a726a9d3fd93dbc87270a5">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">print</span>(<span class="fu">table</span>(penguins<span class="sc">$</span>species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   Adelie Chinstrap    Gentoo 
+      152        68       124 </code></pre>
+</div>
+</div>
+<p>Q5D:</p>
+<p>En calculant le coefficient de Pearson sans les NA nous obtenons un 65.6 % de corrélation entre ces deux paramètres. Ce n’est pas significatif donc nous pouvons affirmer que le corrélation est faible.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-22_9b0976e42b241148456dcedb1239dcf7">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(penguins<span class="sc">$</span>flipper_length_mm, penguins<span class="sc">$</span>bill_length_mm, <span class="at">use=</span><span class="st">"complete.obs"</span> ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6561813</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-23_0eedcf51c70cd769f75952aa62eb23fc">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb53-3"><a href="#cb53-3"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb53-4"><a href="#cb53-4"></a></span>
+<span id="cb53-5"><a href="#cb53-5"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb53-6"><a href="#cb53-6"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species, <span class="at">shape =</span> species), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb53-7"><a href="#cb53-7"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"purple"</span>,<span class="st">"cyan4"</span>)) <span class="sc">+</span></span>
+<span id="cb53-8"><a href="#cb53-8"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Taille des manchots, Palmer Station LTER"</span>,</span>
+<span id="cb53-9"><a href="#cb53-9"></a>  <span class="at">subtitle =</span> <span class="st">"Longueur des nageoires et longueur du bec chez les manchots Adelie,    Chinstrap et de Gentoo"</span>,)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q5E:</p>
+<p>Nous observons un Chinstrap avec une longueur de nageoire anormalement longue (180mm) et un bec de ~57mm). Le reste des donnée semble relativement régulier.</p>
+<p>Q5F:</p>
+<p>Nous pourrions envisager de discriminer le Chinstrap en prenant par exemple la valeur de 205mm pour la longueur des nageoires.</p>
+<p>Q5G:</p>
+<p>Voir Q5D:</p>
+<p>Q5H:</p>
+<p>En modifiant le paramètre shape nous pouvons visualiser les iles avec la forme.</p>
+<p>Les manchots de Gentoo vivent exclusivement sur Biscoe.</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-24_110ca9efc8f786317e028e6084a39ca4">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb54-3"><a href="#cb54-3"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb54-4"><a href="#cb54-4"></a></span>
+<span id="cb54-5"><a href="#cb54-5"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb54-6"><a href="#cb54-6"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species, <span class="at">shape =</span> island), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb54-7"><a href="#cb54-7"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"purple"</span>,<span class="st">"cyan4"</span>)) <span class="sc">+</span></span>
+<span id="cb54-8"><a href="#cb54-8"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Taille des manchots, Palmer Station LTER"</span>,</span>
+<span id="cb54-9"><a href="#cb54-9"></a>  <span class="at">subtitle =</span> <span class="st">"Longueur des nageoires et longueur du bec chez les manchots Adelie,    Chinstrap et de Gentoo"</span>,)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q5I:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-25_c08019759a679a4e76b3623003f36ce3">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">y =</span> species, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb55-2"><a href="#cb55-2"></a>  <span class="fu">geom_jitter</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb55-3"><a href="#cb55-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>,<span class="st">"purple"</span>,<span class="st">"cyan4"</span>)) <span class="sc">+</span></span>
+<span id="cb55-4"><a href="#cb55-4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Iles"</span>,</span>
+<span id="cb55-5"><a href="#cb55-5"></a>       <span class="at">y =</span> <span class="st">"Espèce de manchots"</span>,</span>
+<span id="cb55-6"><a href="#cb55-6"></a>       <span class="at">color =</span> <span class="st">"Espèce de manchots"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q5J:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-26_9c1580fc49589c3ec3ec33c20181bcaf">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb56-3"><a href="#cb56-3"></a></span>
+<span id="cb56-4"><a href="#cb56-4"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb56-5"><a href="#cb56-5"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> sex), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb56-6"><a href="#cb56-6"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>, <span class="st">"grey"</span>)) <span class="sc">+</span></span>
+<span id="cb56-7"><a href="#cb56-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Taille des manchots, Palmer Station LTER"</span>,</span>
+<span id="cb56-8"><a href="#cb56-8"></a>       <span class="at">x =</span> <span class="st">"Longueur des nageoires (mm)"</span>,</span>
+<span id="cb56-9"><a href="#cb56-9"></a>       <span class="at">y =</span> <span class="st">"Longueur du bec (mm)"</span>,</span>
+<span id="cb56-10"><a href="#cb56-10"></a>       <span class="at">color =</span> <span class="st">"Espèce"</span>,</span>
+<span id="cb56-11"><a href="#cb56-11"></a>       <span class="at">shape =</span> <span class="st">"Sexe"</span>) <span class="sc">+</span></span>
+<span id="cb56-12"><a href="#cb56-12"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>species, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Q6A:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-27_4e631f62f9f3bfd0224577d7cb1b3b3b">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>grant <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"isc_grants.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Q6B:</p>
+<div class="cell" data-hash="pw1_VID_cache/html/unnamed-chunk-28_6b1d794a346cd550d8f6681ef55f3e9d">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="fu">library</span>(treemapify)</span>
+<span id="cb58-3"><a href="#cb58-3"></a><span class="fu">library</span>(camcorder)</span>
+<span id="cb58-4"><a href="#cb58-4"></a></span>
+<span id="cb58-5"><a href="#cb58-5"></a></span>
+<span id="cb58-6"><a href="#cb58-6"></a>grant <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"isc_grants.csv"</span>)</span>
+<span id="cb58-7"><a href="#cb58-7"></a></span>
+<span id="cb58-8"><a href="#cb58-8"></a>pal <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#002870"</span>,<span class="st">"#005A87"</span>,<span class="st">"#078788"</span>,<span class="st">"#A5A63C"</span>,<span class="st">"#DE9704"</span>,<span class="st">"#C45D27"</span>,<span class="st">"#AD3518"</span>,<span class="st">"#990C00"</span>)</span>
+<span id="cb58-9"><a href="#cb58-9"></a></span>
+<span id="cb58-10"><a href="#cb58-10"></a><span class="fu">ggplot</span>(grant, <span class="fu">aes</span>(<span class="at">area=</span>funded, <span class="at">fill=</span><span class="fu">factor</span>(year), <span class="at">subgroup=</span><span class="fu">as.factor</span>(year))) <span class="sc">+</span></span>
+<span id="cb58-11"><a href="#cb58-11"></a>  <span class="fu">geom_treemap</span>() <span class="sc">+</span></span>
+<span id="cb58-12"><a href="#cb58-12"></a>  <span class="fu">geom_treemap_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">paste0</span>(title, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, proposed_by, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>, scales<span class="sc">::</span><span class="fu">dollar</span>(funded))), <span class="at">reflow=</span><span class="cn">TRUE</span>, <span class="at">grow=</span><span class="cn">TRUE</span>, <span class="at">color=</span><span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb58-13"><a href="#cb58-13"></a>  <span class="fu">geom_treemap_subgroup_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>year), <span class="at">color=</span><span class="st">"white"</span>, <span class="at">grow=</span><span class="cn">TRUE</span>, <span class="at">alpha=</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb58-14"><a href="#cb58-14"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span>pal) <span class="sc">+</span></span>
+<span id="cb58-15"><a href="#cb58-15"></a>  <span class="fu">labs</span>(</span>
+<span id="cb58-16"><a href="#cb58-16"></a>    <span class="at">title=</span><span class="st">"Bourses accordées selon les années"</span>,</span>
+<span id="cb58-17"><a href="#cb58-17"></a>    <span class="at">caption=</span><span class="st">"Source: Comité de pilotage du consortium R"</span>,</span>
+<span id="cb58-18"><a href="#cb58-18"></a>    <span class="at">fill=</span><span class="st">"Year"</span></span>
+<span id="cb58-19"><a href="#cb58-19"></a>  ) <span class="sc">+</span></span>
+<span id="cb58-20"><a href="#cb58-20"></a>  <span class="fu">theme_void</span>()<span class="sc">+</span></span>
+<span id="cb58-21"><a href="#cb58-21"></a>  <span class="fu">theme</span>(</span>
+<span id="cb58-22"><a href="#cb58-22"></a>    <span class="at">legend.position=</span><span class="st">"none"</span>,</span>
+<span id="cb58-23"><a href="#cb58-23"></a>    <span class="at">plot.background=</span><span class="fu">element_rect</span>(<span class="at">fill=</span><span class="st">"grey99"</span>, <span class="at">color=</span><span class="cn">NA</span>),</span>
+<span id="cb58-24"><a href="#cb58-24"></a>    <span class="at">plot.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">30</span>, <span class="at">face=</span><span class="st">"bold"</span>, <span class="at">color=</span><span class="st">"#0D2765"</span>, <span class="at">margin=</span><span class="fu">margin</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">0</span>)),</span>
+<span id="cb58-25"><a href="#cb58-25"></a>    <span class="at">plot.caption=</span><span class="fu">element_text</span>(<span class="at">color=</span><span class="st">"#0D2765"</span>),</span>
+<span id="cb58-26"><a href="#cb58-26"></a>    <span class="at">plot.margin=</span><span class="fu">margin</span>(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb58-27"><a href="#cb58-27"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="pw1_VID_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Conclusion</p>
+<p>En conclusion, cette expérience m’a permis de mettre en pratique plusieurs aspects fondamentaux de l’analyse de données et de la visualisation. À travers la manipulation des jeux de données, j’ai pu développer mes compétences avec les outils tels que R et ses bibliothèques.</p>
+<p>J’ai pu apprendre à créer des visualisations intéressantes, ce projet m’a permis d’acquérir des connaiisances de base dans la manipulation des données avec R dans le domaine de la science des données.</p>
+<p>J’ai rencontré plusieurs problèmes avec le logiciel Rstudio qui ont souvent été résolus en redémarrant celui-ci. De plus ne nombreux problèmes avec certains packages en rapport avec des versions lors d’appel de fonctions sans vraiment comprendre d’où venait le problème..</p>
+<p>Ce cours m’a permis de prendre conscience de l’importance de la présentation des données et de la clarté dans la communication des résultats, des compétences indispensables dans ma future carrière en science des données.</p>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
