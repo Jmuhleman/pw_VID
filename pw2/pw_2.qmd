@@ -39,18 +39,18 @@ description des données,
 calligraphie, 
 précisions dans explications
 PAS d'ENGLISH
+PLUS de commentaires
+
+
+
+# Introduction
+
+blablabla
 
 
 
 
-
-
-
-
-
-
-
-# Exercice 1/
+# Exercice 1
 
 ## a  Calculer le coefficient de corrélation entre la taille et l'age.
 
@@ -116,17 +116,40 @@ abline(kalama.lm, col = "blue", lwd = 2)
 
 ```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
 
-#kalama.lm <- lm(age ~ taille, data=kalama)
-#par(mfrow=c(1,1), pty="s")
-#plot(kalama.lm, which=1)
+kalama.lm <- lm(age ~ taille, data=kalama)
+par(mfrow=c(1,1), pty="s")
+plot(kalama.lm, which=1)
 
+```
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
 
 model_summary <- summary(kalama.lm)
-mse <- model_summary$sigma^2
-
+#mse <- model_summary$sigma^2
+#model_summary
 print(mse)
 ```
 
-```{r}
+## f Déterminer la valeur du coefficient de détermination R2 de la régression.
+
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+
+model_summary <- summary(kalama.lm)
+
+r_squared <- model_summary$r.squared
+print(r_squared)
 
 ```
+## g Effectuer un diagnostic du modèle ajusté à l’aide des graphiques appropriés.
+
+
+
+
+
+
+
+
+

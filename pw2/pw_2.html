@@ -82,7 +82,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#exercice-1" id="toc-exercice-1" class="nav-link active" data-scroll-target="#exercice-1">Exercice 1/</a></li>
+  <li><a href="#exercice-1" id="toc-exercice-1" class="nav-link active" data-scroll-target="#exercice-1">Exercice 1/</a>
+  <ul class="collapse">
+  <li><a href="#a-calculer-le-coefficient-de-corrélation-entre-la-taille-et-lage." id="toc-a-calculer-le-coefficient-de-corrélation-entre-la-taille-et-lage." class="nav-link" data-scroll-target="#a-calculer-le-coefficient-de-corrélation-entre-la-taille-et-lage.">a Calculer le coefficient de corrélation entre la taille et l’age.</a></li>
+  <li><a href="#b-tracer-le-nuage-de-points-taille-versus-age." id="toc-b-tracer-le-nuage-de-points-taille-versus-age." class="nav-link" data-scroll-target="#b-tracer-le-nuage-de-points-taille-versus-age.">b Tracer le nuage de points taille versus age.</a></li>
+  <li><a href="#c-estimer-les-coefficients-beta_0-et-beta_1-par-la-méthode-des-moindres-carrés.-enregistrer-le-résultat-de-lajustement-du-modèle-dans-lobjet-kalama.lm-de-r." id="toc-c-estimer-les-coefficients-beta_0-et-beta_1-par-la-méthode-des-moindres-carrés.-enregistrer-le-résultat-de-lajustement-du-modèle-dans-lobjet-kalama.lm-de-r." class="nav-link" data-scroll-target="#c-estimer-les-coefficients-beta_0-et-beta_1-par-la-méthode-des-moindres-carrés.-enregistrer-le-résultat-de-lajustement-du-modèle-dans-lobjet-kalama.lm-de-r.">c Estimer les coefficients <span class="math inline">\(\beta_{0}\)</span> et <span class="math inline">\(\beta_{1}\)</span> par la méthode des moindres carrés. Enregistrer le résultat de l’ajustement du modèle dans l’objet kalama.lm de R.</a></li>
+  <li><a href="#d-ajuster-sur-le-graphique-la-droite-des-moindres-carrés-en-utilisant-la-fonction-abline." id="toc-d-ajuster-sur-le-graphique-la-droite-des-moindres-carrés-en-utilisant-la-fonction-abline." class="nav-link" data-scroll-target="#d-ajuster-sur-le-graphique-la-droite-des-moindres-carrés-en-utilisant-la-fonction-abline.">d Ajuster sur le graphique la droite des moindres carrés en utilisant la fonction abline().</a></li>
+  <li><a href="#e-estimer-la-variance-des-erreurs-σ2." id="toc-e-estimer-la-variance-des-erreurs-σ2." class="nav-link" data-scroll-target="#e-estimer-la-variance-des-erreurs-σ2.">e Estimer la variance des erreurs σ2.</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="pw_2.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
 </div>
@@ -127,11 +134,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p>description des données, calligraphie, précisions dans explications PAS d’ENGLISH</p>
 <section id="exercice-1" class="level1">
 <h1>Exercice 1/</h1>
-<ol type="a">
-<li>Calculer le coefficient de corrélation entre la taille et l’age.</li>
-</ol>
+<section id="a-calculer-le-coefficient-de-corrélation-entre-la-taille-et-lage." class="level2">
+<h2 class="anchored" data-anchor-id="a-calculer-le-coefficient-de-corrélation-entre-la-taille-et-lage.">a Calculer le coefficient de corrélation entre la taille et l’age.</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>kalama <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"kalama.txt"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">""</span>, <span class="at">dec =</span> <span class="st">"."</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
@@ -158,18 +165,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] 0.9943661</code></pre>
 </div>
 </div>
-<ol start="2" type="a">
-<li>Tracer le nuage de points taille versus age.</li>
-</ol>
+</section>
+<section id="b-tracer-le-nuage-de-points-taille-versus-age." class="level2">
+<h2 class="anchored" data-anchor-id="b-tracer-le-nuage-de-points-taille-versus-age.">b Tracer le nuage de points taille versus age.</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">plot</span>(kalama)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="pw_2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
-<ol start="3" type="a">
-<li>Estimer les coefficients <span class="math inline">\(\beta_{0}\)</span> et <span class="math inline">\(\beta_{1}\)</span> par la méthode des moindres carrés. Enregistrer le résultat de l’ajustement du modèle dans l’objet kalama.lm de R.</li>
-</ol>
+</section>
+<section id="c-estimer-les-coefficients-beta_0-et-beta_1-par-la-méthode-des-moindres-carrés.-enregistrer-le-résultat-de-lajustement-du-modèle-dans-lobjet-kalama.lm-de-r." class="level2">
+<h2 class="anchored" data-anchor-id="c-estimer-les-coefficients-beta_0-et-beta_1-par-la-méthode-des-moindres-carrés.-enregistrer-le-résultat-de-lajustement-du-modèle-dans-lobjet-kalama.lm-de-r.">c Estimer les coefficients <span class="math inline">\(\beta_{0}\)</span> et <span class="math inline">\(\beta_{1}\)</span> par la méthode des moindres carrés. Enregistrer le résultat de l’ajustement du modèle dans l’objet kalama.lm de R.</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>kalama.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(age <span class="sc">~</span> taille, <span class="at">data=</span>kalama)</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co">#par(mfrow=c(2,2), pty="s")</span></span>
@@ -188,8 +195,10 @@ Coefficients:
 </div>
 </div>
 <p>Donc nous avons:</p>
-<p>beta0 = -100.842 et beta1 = 1.557</p>
-<p>d. Ajuster sur le graphique la droite des moindres carrés en utilisant la fonction abline().</p>
+<p><span class="math inline">\(\beta_{0}\)</span> = -100.842 et <span class="math inline">\(\beta_{1}\)</span> = 1.557</p>
+</section>
+<section id="d-ajuster-sur-le-graphique-la-droite-des-moindres-carrés-en-utilisant-la-fonction-abline." class="level2">
+<h2 class="anchored" data-anchor-id="d-ajuster-sur-le-graphique-la-droite-des-moindres-carrés-en-utilisant-la-fonction-abline.">d Ajuster sur le graphique la droite des moindres carrés en utilisant la fonction abline().</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>coeff <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(kalama.lm)</span>
 <span id="cb9-2"><a href="#cb9-2"></a></span>
@@ -205,9 +214,9 @@ Coefficients:
 <p><img src="pw_2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
-<ol start="5" type="a">
-<li>Estimer la variance des erreurs σ2.</li>
-</ol>
+</section>
+<section id="e-estimer-la-variance-des-erreurs-σ2." class="level2">
+<h2 class="anchored" data-anchor-id="e-estimer-la-variance-des-erreurs-σ2.">e Estimer la variance des erreurs σ2.</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">#kalama.lm &lt;- lm(age ~ taille, data=kalama)</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="co">#par(mfrow=c(1,1), pty="s")</span></span>
@@ -222,6 +231,7 @@ Coefficients:
 <pre><code>[1] 0.1606757</code></pre>
 </div>
 </div>
+</section>
 </section>
 
 </main>
