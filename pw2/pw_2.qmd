@@ -36,7 +36,7 @@ editor:
 
 
 description des données, 
-calligraphie, 
+calligraphie latek
 précisions dans explications
 PAS d'ENGLISH
 PLUS de commentaires
@@ -80,8 +80,6 @@ plot(kalama)
 ```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
 
 
-
-
 kalama.lm <- lm(age ~ taille, data=kalama)
 #par(mfrow=c(2,2), pty="s")
 #plot(kalama.lm, which=1:4)
@@ -112,7 +110,7 @@ plot(kalama$taille, kalama$age, main = eq,
 abline(kalama.lm, col = "blue", lwd = 2)
 ```
 
-## e Estimer la variance des erreurs σ2.
+## e Estimer la variance des erreurs $\sigma^2$.
 
 ```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
 
