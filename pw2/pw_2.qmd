@@ -149,11 +149,11 @@ resid_interact(kalama.lm)
 ## h En combinant les résultats obtenus en d), f) et g), qualifier l’ajustement du modèle aux
 données observées.
 
-Nous pouvons dire que le modèle est bien ajusté aux données observées. En effet, le coefficient de détermination est de 0.988, ce qui signifie que 98% de la variance de la variable dépendante est expliquée par la variable indépendante. De plus, les graphiques de diagnostic montrent que les résidus sont relativement bien distribués autour de 0 et ne présentent pas de structure particulière.
+Nous pouvons dire que le modèle est bien ajusté aux données observées. En effet, le coefficient de détermination est de 0.988, ce qui signifie que 98% de la variance de la variable dépendante est expliquée par la variable indépendante. De plus, les graphiques de diagnostic montrent que les résidus sont relativement bien distribués autour de 0 (variance constante) et ne présentent pas de structure particulière (indépendance des erreurs). Nous pouvons également dire que la somme des résidus est proche de 0 (espérance proche de 0).
 
 Nous pouvons observer dans le Quantile-Quantile plot (QQ plot) que les résidus suivent une distribution proche de la loi normale. Ce que confirme l'histogramme des résidus et la boite à moustache sur la même ligne.
 
-La distance de Cook nous permet de visualiser les observations qui ont le plus d'impact sur le modèle. Nous pouvons voir que les observations 1 et 2 ont un impact plus important que les autres observations. Ceci est certainement dû au fait que ces deux observations sont des valeurs aberrantes.
+La distance de Cook nous permet de visualiser les observations qui ont le plus d'impact sur le modèle. Nous pouvons voir que les observations 1 et 2 ont un impact plus important que les autres observations. Ceci est certainement dû au fait que ces deux observations sont des valeurs aberrantes. En prenant un seuil de $\ 4/n$ nous avons donc 0.3 comme ligne pointillée.
 
 Nous pouvons observer le graphique de la régression en haut à droite. Celui-ci nous indique que le modèle de manière générale est bien adapté à faire des prédictions sur de nouvelles données. Cependant, il est important de noter que nous disposons de relativement peu d'observations donc il est possible que le modèle ne soit pas aussi robuste avec de nouvelles données.
 
@@ -177,6 +177,142 @@ print(p_value)
 
 
 Nous avons une p-valeur de ~4.43E-11 qui est inférieure à 0.05. Nous pouvons donc rejeter l'hypothèse nulle selon laquelle la pente de la droite de régression est égale à zéro. Nous pouvons donc conclure que la pente de la droite de régression est significativement différente de zéro.
+
+
+
+
+# Exercice 2
+
+
+## a Introduire les données observées dans votre session actuelle de R en complétant les commandes
+ci-dessous.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+mortalite.pnb <- data.frame(pays=c("Allemagne RFA","Autriche","Belgique","Danemark","Espagne",
+"France","Grèce","Irlande","Italie","Luxembourg","Pays-Bas",
+"Portugal","Royaume-Uni","Suisse"),
+
+PNB=c(190, 128, 180, 212, 56, 192, 68, 98, 110, 197, 155, 40, 181, 233),
+mortalite=c(24, 28, 24, 19, 37, 22, 34, 25, 36, 24, 14, 65, 20, 18))
+
+```
+
+
+
+## b Déterminer le résumé des variables en utilisant la fonction summary().
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+
+summary(mortalite.pnb)
+
+```
+
+
+
+## c Reproduire le graphique de nuage de points de la page suivante représentant la mortalité
+infantile (y) en fonction du produit national brut (x). Pour y parvenir, il convient d’utiliser
+les librairies tidyverse et ggrepel.
+
+```{r, warning=FALSE, results=TRUE, fig.height=8, fig.width=8}
+
+library(tidyverse)
+library(ggrepel)
+
+ggplot(mortalite.pnb, aes(x=PNB, y=mortalite, label=pays)) +
+  geom_point() +
+  geom_text_repel() +
+  xlab("Produit National Brut") +
+  ylab("Mortalité infantile") +
+  ggtitle("PNB et mortalité infantile") +
+  theme_minimal() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue")
+
+```
+
+
+Nous pouvons observer que le Portugal est un pays qui ne suit pas la tendance générale dessinée par les points. En effet, le Portugal a un PNB relativement faible par rapport à la mortalité infantile. Cela peut être dû à plusieurs facteurs, tels que la qualité des soins de santé, l'accès aux soins de santé, la qualité de l'eau, etc. Les Pays-bas se démarquent également, mais dans le sens inverse. les Pays-Bas ont un PNB relativement élevé par rapport à la mortalité infantile.
+
+
+## d Déterminer l’équation de la droite de régression linéaire ajustée sur le nuage de points à
+l’aide de la méthode des moindres carrés.
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+mortalite.pnb.lm <- lm(mortalite ~ PNB, data=mortalite.pnb)
+summary(mortalite.pnb.lm)
+
+```
+Nous pouvons voir que les paramètres estimés sont les suivants:
+$\ \hat{y} = 51.01 * x - 0.16$
+
+
+
+## e Donner le coefficient de corrélation linéaire r.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+correlation <- cor(mortalite.pnb$PNB, mortalite.pnb$mortalite)
+print(correlation)
+
+```
+
+## f En déduire le coefficient de détermination R^2.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+
+r_squared <- summary(mortalite.pnb.lm)$r.squared
+print(r_squared)
+
+```
+
+## g Effectuer une vérification des hypothèses inhérentes au modèle à l’aide des graphiques
+appropriés.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+par(mfrow=c(2,2), pty="s")
+plot(mortalite.pnb.lm, which=1:4)
+
+```
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+summary(mortalite.pnb.lm)$coefficients
+
+
+```
+Nous pouvons effectuer la vérification d'hypothèse en utilisant les valeurs p des coefficients. Ces valeurs sont toutes inférieures à 0.05, ce qui signifie que nous pouvons rejeter l'hypothèse nulle selon laquelle les coefficients sont égaux à zéro. Nous pouvons donc conclure que le modèle est significatif.
+
+Nous avons donc:
+$\ \hat{y}  = 51.01 * x - 0.16$
+
+Le graphe des résidus en haut à gauche nous indique que nous avons une espérance qui se rapporche de 0 puisqe la somme des résidus tends vers 0. La variance des résidus est constante, ce qui est une bonne chose. Le graphe des résidus en fonction des valeurs prédites nous montre que les résidus sont répartis de manière aléatoire autour de 0 car nous n'avons pas de signal cyclique (I.E. sinus...).
+
+Le graphe Q-Q  nous indique que les résidus suivent une loi normale. Néanmoins nous avons un point qui s'écarte de la droite, ceci est certainement le Portugal (12).
+
+Le graphe de la distance de Cook nous indique que nous avons à nouveau le Portugal qui à une grande influence sur la régression.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
