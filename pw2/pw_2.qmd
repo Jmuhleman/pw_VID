@@ -123,25 +123,66 @@ plot(kalama.lm, which=1)
 ```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
 
 model_summary <- summary(kalama.lm)
-#mse <- model_summary$sigma^2
+mse <- model_summary$sigma^2
 #model_summary
 print(mse)
 ```
 
 ## f Déterminer la valeur du coefficient de détermination R2 de la régression.
 
-
-
 ```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
 
-
 model_summary <- summary(kalama.lm)
-
 r_squared <- model_summary$r.squared
 print(r_squared)
 
 ```
 ## g Effectuer un diagnostic du modèle ajusté à l’aide des graphiques appropriés.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+library(ggResidpanel)
+resid_panel(kalama.lm, plots="all")
+resid_interact(kalama.lm)
+
+```
+
+## h En combinant les résultats obtenus en d), f) et g), qualifier l’ajustement du modèle aux
+données observées.
+
+Nous pouvons dire que le modèle est bien ajusté aux données observées. En effet, le coefficient de détermination est de 0.988, ce qui signifie que 98% de la variance de la variable dépendante est expliquée par la variable indépendante. De plus, les graphiques de diagnostic montrent que les résidus sont relativement bien distribués autour de 0 et ne présentent pas de structure particulière.
+
+Nous pouvons observer dans le Quantile-Quantile plot (QQ plot) que les résidus suivent une distribution proche de la loi normale. Ce que confirme l'histogramme des résidus et la boite à moustache sur la même ligne.
+
+La distance de Cook nous permet de visualiser les observations qui ont le plus d'impact sur le modèle. Nous pouvons voir que les observations 1 et 2 ont un impact plus important que les autres observations. Ceci est certainement dû au fait que ces deux observations sont des valeurs aberrantes.
+
+Nous pouvons observer le graphique de la régression en haut à droite. Celui-ci nous indique que le modèle de manière générale est bien adapté à faire des prédictions sur de nouvelles données. Cependant, il est important de noter que nous disposons de relativement peu d'observations donc il est possible que le modèle ne soit pas aussi robuste avec de nouvelles données.
+
+
+
+
+
+## i Tester à un niveau de signification de 5% si la pente de la droite de régression est significativement
+différente de zéro.
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+summary_result <- summary(kalama.lm)
+attributes(summary_result$coefficients)
+
+p_value <- summary_result$coefficients[2, 4] 
+print(p_value)
+
+```
+
+
+Nous avons une p-valeur de ~4.43E-11 qui est inférieure à 0.05. Nous pouvons donc rejeter l'hypothèse nulle selon laquelle la pente de la droite de régression est égale à zéro. Nous pouvons donc conclure que la pente de la droite de régression est significativement différente de zéro.
+
+
+
+
+
+
 
 
 
