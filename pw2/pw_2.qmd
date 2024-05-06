@@ -412,7 +412,7 @@ litters.lm <- lm(brainwt ~ lsize, data=litters)
 summary(litters.lm)
 
 ```
-```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+```{r, warning=TRUE, results=TRUE, fig.height=10, fig.width=10}
 
 litters.lm <- lm(brainwt ~ bodywt, data=litters)
 summary(litters.lm)
@@ -451,17 +451,123 @@ En outre, les deux variables expliquent la taille du cerveau. Cependant, nous po
 ## h Tracer le graphique du nuage de points ci-dessous en complétant les commandes
 
 
-```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+```{r, warning=TRUE, results=TRUE, fig.height=10, fig.width=10}
 library(scatterplot3d)
-s3d <- scatterplot3d(litters$brainwt, litters$bodywt, litters$lsize, main = "",
+
+s3d <- scatterplot3d(litters$lsize, litters$bodywt, litters$brainwt, main = "",
 color="midnightblue", xlab="litter size", ylab="body weight",
 zlab="brain weight", angle = -60, pch=21, bg="orange")
+litters.fit <- lm(brainwt ~ lsize + bodywt, data = litters)
+
 s3d$plane3d(litters.fit, draw_polygon=TRUE, lty.box="solid")
 
 ```
 
 
 
+## i Déterminer le coefficient de détermination R2 et le coefficient de détermination ajusté R2adj
+associés au modèle. Que peut-on conclure ?
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+model_summary <- summary(litters.fit)
+print(model_summary)
+
+```
+Nous avons donc un coefficient de détermination de 0.65 et un coefficient de détermination ajusté de 0.61. Cela signifie que 65% de la variance de la taille du cerveau est expliquée par le poids du corps et la taille de la portée. Cela signifie que le modèle explique bien la taille du cerveau.
+
+Nous pouvons conclure que le modèle est significatif et capture bien la taille du cerveau. Cependant il reste 35% de la variance qui n'est pas expliquée par le modèle. Cela pourrait venir de facteurs non inclus dans les données. Le coefficient ajusté de 0.61 tient compte du nombre d'observations dans le modèle. La légère baisse par rapport au $\\R^2$
+
+
+## j Effectuer une vérification des hypothèses inhérentes au modèle à l’aide des graphiques
+appropriés. À votre avis, que peut-on faire pour améliorer la qualité du modèle ajusté ?
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+par(mfrow=c(2,2))
+plot(litters.fit)
+
+```
+
+
+
+Nous pouvons voir que les résidus sont distribués de manière aléatoire autour de 0. Cela signifie que les résidus sont normalement distribués. Nous pouvons également voir que les résidus sont distribués de manière homogène. Cela signifie que la variance des résidus est constante. Enfin, nous pouvons voir que les résidus ne sont pas corrélés. Cela signifie que les résidus ne sont pas corrélés entre eux.
+
+Pour améliorer la qualité du modèle ajusté, nous pourrions ajouter des variables explicatives supplémentaires. Cela pourrait nous aider à expliquer davantage la variance de la taille du cerveau. Nous pourrions également essayer de transformer les variables explicatives pour voir si cela améliore le modèle. En utilisant un logarithme par exemple.
+
+
+
+# Exercice 4
+
+## a Tracer le graphique des corrélations et des nuages de points se trouvant ci-dessous à l’aide
+de la fonction ggpairs() de la librairie GGally.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+library(GGally)
+library(readxl)
+
+wine <- read_excel("Wine.xlsx")
+ggpairs(wine, title = "Correlation des vins")
+
+```
+
+Quelles sont les variables explicatives qui semblent au mieux expliquer la variable de réponse
+?
+
+Les variables explicatives qui semblent le mieux expliquer la variable de réponse sont les variables aroma et flavour. En effet, ces variables ont une corrélation élevée avec la variable de réponse 0.707 et 0.790. Cela signifie que ces variables sont fortement corrélées avec la variable de réponse et pourraient être de bons prédicteurs de la variable réponse quality.
+
+
+## b Déterminer l’équation du modèle de régression linéaire multiple obtenue par la méthode
+des moindres carrés.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+wine.lm <- lm(wine$Quality ~ wine$Aroma + wine$Flavor, data=wine)
+summary(wine.lm)
+```
+
+Nous pouvons utiliser la méthode summary pour obtenir l'équation du modèle. Nous obtenons:
+$\ \hat{y} = 0.52 * aroma + 1.17 * flavor + 4.35$
+
+## c Dresser la table qui résume l’ajustement du modèle. Tester séparément la significativité de
+chaque variable explicative par rapport au modèle complet.
+
+
+Nous allons tester la significativité de chaque variable explicative par rapport au modèle complet.
+
+Ordonnée à l'origine: 0.000127 -> est inférieure à 0.05 donc significative
+wine$Aroma: 0.069 -> est supérieure à 0.05 donc non significative
+wine$Flavor: 0.00029 -> est inférieure à 0.05 donc significative
+
+
+## c Quelles variables explicatives sont significatives à un niveau de signfication de 5%? Que
+peut-on conclure en considérant également les graphiques des corrélations et des nuages
+de points tracés en a) ?
+
+
+Nous pouvons voir que la variable explicative flavor est significative à un niveau de signification de 5%. En revanche, la variable explicative aroma n'est pas significative à un niveau de signification de 5%. Cela signifie que la variable explicative flavor est un bon prédicteur de la variable réponse quality, tandis que la variable explicative aroma n'est pas un bon prédicteur de la variable réponse quality.
+
+Néanmoins, nous pouvons voir que la variable explicative aroma est fortement corrélée avec la variable réponse quality. Cela est certainement dû à une multicollinéarité entre les variables explicatives aroma et flavor. La corrélation entre Flavor et aroma est de 0.737 et comme Flavor est corrélée à Quality alors Aroma le sera avec Quality également. Heureusement en analysant les p-valeurs nous nous aperçevons que Aroma n'est pas significative.
+
+
+
+
+## d Déterminer le coefficient de détermination $\\R^2$ et le coefficient de détermination ajusté $\\R^2adj$
+associés au modèle.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+model_summary <- summary(wine.lm)
+print(model_summary)
+
+```
+
+Nous avons donc un coefficient de détermination de 0.65 et un coefficient de détermination ajusté de 0.61. Cela signifie que 65% de la variance de la qualité du vin est capturée par les variables aroma et flavor. Cela signifie que le modèle explique moyennement la qualité du vin.
+
+
+
+## e Faire une recherche bibliographique pour expliquer en utilisant vos propres mots ce que
+représentent ces critères, leur qualité et leur défaut.
+
+
+TODO
 
 
 
@@ -471,44 +577,18 @@ s3d$plane3d(litters.fit, draw_polygon=TRUE, lty.box="solid")
 
 
 
+## f Utiliser la librairie leaps et appliquer les critères R2a
+dj, BIC et Cp en adaptant le code cidessous.
 
 
+```{r, warning=FALSE, results=TRUE, fig.height=8, fig.width=8}
+library(leaps)
+choix <- regsubsets(Quality~., data=wine, nbest=1, nvmax=11)
+plot(choix, scale="adjr2", col="midnightblue")
+leaps <- regsubsets(Quality~., data=wine, nbest=10)
+summary(leaps)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 
 
 
