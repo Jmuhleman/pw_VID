@@ -246,7 +246,7 @@ summary(mortalite.pnb.lm)
 
 ```
 Nous pouvons voir que les paramètres estimés sont les suivants:
-$\ \hat{y} = 51.01 * x - 0.16$
+$\ \hat{y} = 51.01 * PNB - 0.16$
 
 
 
@@ -291,11 +291,187 @@ Nous pouvons effectuer la vérification d'hypothèse en utilisant les valeurs p 
 Nous avons donc:
 $\ \hat{y}  = 51.01 * x - 0.16$
 
-Le graphe des résidus en haut à gauche nous indique que nous avons une espérance qui se rapporche de 0 puisqe la somme des résidus tends vers 0. La variance des résidus est constante, ce qui est une bonne chose. Le graphe des résidus en fonction des valeurs prédites nous montre que les résidus sont répartis de manière aléatoire autour de 0 car nous n'avons pas de signal cyclique (I.E. sinus...).
+Le graphe des résidus en haut à gauche nous indique que nous avons une espérance qui se rapproche de 0 puisque la somme des résidus tends vers 0. La variance des résidus est constante, ce qui est une bonne chose. Le graphe des résidus en fonction des valeurs prédites nous montre que les résidus sont répartis de manière aléatoire autour de 0 car nous n'avons pas de signal cyclique (I.E. sinus...).
 
 Le graphe Q-Q  nous indique que les résidus suivent une loi normale. Néanmoins nous avons un point qui s'écarte de la droite, ceci est certainement le Portugal (12).
 
 Le graphe de la distance de Cook nous indique que nous avons à nouveau le Portugal qui à une grande influence sur la régression.
+
+
+
+
+## h Donner à l’aide du modèle ajusté une prédiction de la mortalité infantile pour un PNB de
+100. Pour y parvenir, il convient d’utiliser la fonction predict().
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+xnew <- matrix(c(100), nrow=1)
+colnames(xnew) <- c("PNB")
+xnew <- as.data.frame(xnew)
+predict(mortalite.pnb.lm, xnew, interval="pred")
+
+```
+
+## i Un modèle de régression linéaire a été ajusté en considérant la mortalité comme variable
+de réponse et le logarithme naturel du PNB comme variable explicative. Le coefficient de
+détermination associé à l’ajustement de ce modèle vaut 0.74.
+
+Nous pouvons en premier lieu afficher les résultats statistiques du modèle. Nous pouvons voir que nous obtenons un coefficient de détermination de 0.74, ce qui est un bon résultat. Cela signifie que 74% de la variance de la mortalité infantile est expliquée par le PNB. Nous avons un meilleur modèle que précédemment (0.74 > 0.71).
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+mortalite.pnb$logPNB <- log(mortalite.pnb$PNB)
+mortalite.pnb.lm2 <- lm(mortalite ~ logPNB, data=mortalite.pnb)
+summary(mortalite.pnb.lm2)
+
+```
+
+Nous pouvons également afficher les graphes correpondant à l'analyse des résidus et des hypothèses du modèle. Nous pouvons voir que les résidus suivent une loi normale selon le 'Q-Q Residuals', la variance est constante et la somme des résidus tend vers 0 (espérance de 0) selon le 'Residuals vs Fitted. Le 'Scale-Location' nous montre que la variance des résidus est constante. Enfin, le 'Cook's distance' nous montre que le Portugal a toujours une grande influence sur la régression.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+par(mfrow=c(2,2), pty="s")
+plot(mortalite.pnb.lm2, which=1:4)
+
+```
+
+
+# Exercice 3
+
+La taille de la portée (lsize), le poids du corps (bodywt) et le poids du cerveau (brainwt) ont
+été relevés dans un échantillon formé de 20 souris. On se propose d’étudier la relation qui peut
+exister entre le poids du cerveau (variable de réponse) et la taille de la portée et le poids du corps
+(variables explicatives).
+Les données se trouvent dans le fichier litters.rds qu’il faut lire dans votre session actuelle de
+R à l’aide de la fonction readRDS().
+
+
+## a Tracer le graphique des corrélations et des nuages de points se trouvant ci-dessous à l’aide
+de la fonction ggpairs() de la librairie GGally.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+library(GGally)
+litters <- readRDS("litters.rds")
+ggpairs(litters)
+
+```
+
+
+## b Existe-t-il une relation entre les deux variables explicatives lsize et bodywt?
+Nous pouvons voir qu'il existe une relation linéaire inversement proportionnelle entre lsize et bodywt. En effet, plus la taille de la portée est grande, plus le poids du corps est faible.
+
+
+
+## c Qu’en est-il de la relation entre la variable de réponse brainwt et les deux variables explicatives
+à considérer l’une après l’autre ?
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+litters.lm <- lm(brainwt ~ lsize, data=litters)
+r2 <- summary(litters.lm)$r.squared
+print(c)
+
+```
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+litters.lm <- lm(brainwt ~ bodywt, data=litters)
+r2 <- summary(litters.lm)$r.squared
+print(r2)
+
+
+```
+Nous avons calculé le coefficient de détermination entre la taille du cerveau et le poids ainsi que la longueur. Nous observons que le coefficient de détermination est plus élevé pour le poids du corps que pour la taille de la portée. Cela signifie que le poids du corps explique mieux la taille du cerveau que la taille de la portée. A noter que la relation est négative.
+
+
+## d Répondre aux mêmes questions en utilisant la librairie rgl de R et en complétant le code
+ci-dessous.
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}  
+library(rgl)
+plotids <- with(litters, plot3d(litters$brainwt, litters$bodywt, litters$lsize, type="s", col="blue"))
+rglwidget(elementId = "plot3drgl")
+```
+
+
+
+## e Sera-t-il commode de distinguer clairement les effects des deux variables explicatives sur
+la variable de réponse ?
+
+Il est difficile de distinguer les effets des deux variables explicatives sur la variable de réponse. En effet, les points sont superposés et il est difficile de comprendre la relation entre les variables dans un espace 3D.
+
+
+
+## f Déterminer l’équation du modèle de régression linéaire multiple obtenue par la méthode
+des moindres carrés.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+litters.lm <- lm(brainwt ~ lsize + bodywt, data=litters)
+summary(litters.lm)
+
+```
+
+Nous pouvons utiliser la méthode summary pour obtenir l'équation du modèle. Nous obtenons:
+$\ \hat{y} = 0.010 * bodywt - 0.335$
+
+
+
+## g Dresser la table qui résume l’ajustement du modèle à l’aide de la fonction summary().
+Tester séparément la significativité de chaque variable explicative par rapport au modèle
+complet.
+Quelles variables explicatives sont significatives à un niveau de signification de 5%? Que
+peut-on conclure en considérant également les graphiques des corrélations et des nuages
+de points tracés ci-dessus ?
+
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+summary(litters.lm)
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
