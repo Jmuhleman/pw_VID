@@ -408,43 +408,57 @@ des moindres carrés.
 
 ```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
 
-litters.lm <- lm(brainwt ~ lsize + bodywt, data=litters)
+litters.lm <- lm(brainwt ~ lsize, data=litters)
 summary(litters.lm)
 
 ```
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+litters.lm <- lm(brainwt ~ bodywt, data=litters)
+summary(litters.lm)
+```
 
 Nous pouvons utiliser la méthode summary pour obtenir l'équation du modèle. Nous obtenons:
-$\ \hat{y} = 0.010 * bodywt - 0.335$
+pour la variable bodywt:
+$\ \hat{y} = 0.010 * bodywt + 0.335$
+pour la variable lsize:
+$\ \hat{y} = -0.004 * lsize + 0.447$
+
 
 
 
 ## g Dresser la table qui résume l’ajustement du modèle à l’aide de la fonction summary().
 Tester séparément la significativité de chaque variable explicative par rapport au modèle
 complet.
+
+
 Quelles variables explicatives sont significatives à un niveau de signification de 5%? Que
 peut-on conclure en considérant également les graphiques des corrélations et des nuages
 de points tracés ci-dessus ?
 
 
 
+Voir les 2 tables dressées en f.
+
+Nous pouvons voir que les deux variables explicatives (lsize et bodywt) sont significatives à un niveau de signification de 5%.
+L'estimateur du poids du corps est significatif à 0.000158 et l'estimateur de la taille de la portée s'élève à 0.00344. Les deux p-valeurs sont donc inférieures à 0.05. La probabilité de l'hypothèse nulle est donc inférieure à 5% et nous pouvons donc la rejeter.
+
+En outre, les deux variables expliquent la taille du cerveau. Cependant, nous pouvons voir que le poids du corps explique mieux la taille du cerveau que la taille de la portée. En effet, le coefficient de détermination est plus élevé pour le poids du corps que pour la taille de la portée.
+
+
+
+
+## h Tracer le graphique du nuage de points ci-dessous en complétant les commandes
+
+
 ```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
-
-summary(litters.lm)
-
-
+library(scatterplot3d)
+s3d <- scatterplot3d(litters$brainwt, litters$bodywt, litters$lsize, main = "",
+color="midnightblue", xlab="litter size", ylab="body weight",
+zlab="brain weight", angle = -60, pch=21, bg="orange")
+s3d$plane3d(litters.fit, draw_polygon=TRUE, lty.box="solid")
 
 ```
-
-
-
-
-
-
-
-
-
-
-
 
 
 
