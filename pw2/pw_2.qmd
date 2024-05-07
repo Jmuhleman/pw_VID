@@ -246,7 +246,7 @@ summary(mortalite.pnb.lm)
 
 ```
 Nous pouvons voir que les paramètres estimés sont les suivants:
-$\ \hat{y} = 51.01 * PNB - 0.16$
+$\\\hat{y} = 51.01 * PNB - 0.16$
 
 
 
@@ -545,7 +545,7 @@ de points tracés en a) ?
 
 Nous pouvons voir que la variable explicative flavor est significative à un niveau de signification de 5%. En revanche, la variable explicative aroma n'est pas significative à un niveau de signification de 5%. Cela signifie que la variable explicative flavor est un bon prédicteur de la variable réponse quality, tandis que la variable explicative aroma n'est pas un bon prédicteur de la variable réponse quality.
 
-Néanmoins, nous pouvons voir que la variable explicative aroma est fortement corrélée avec la variable réponse quality. Cela est certainement dû à une multicollinéarité entre les variables explicatives aroma et flavor. La corrélation entre Flavor et aroma est de 0.737 et comme Flavor est corrélée à Quality alors Aroma le sera avec Quality également. Heureusement en analysant les p-valeurs nous nous aperçevons que Aroma n'est pas significative.
+Néanmoins, nous pouvons voir que la variable explicative aroma est fortement corrélée avec la variable réponse quality. Cela est certainement dû à une multicollinéarité entre les variables explicatives aroma et flavor. La corrélation entre Flavor et aroma est de 0.737 et comme Flavor est corrélée à Quality alors Aroma le sera avec Quality également. Heureusement en analysant les p-valeurs nous nous apercevons que Aroma n'est pas significative.
 
 
 
@@ -616,11 +616,102 @@ dj, BIC et Cp en adaptant le code cidessous.
 ```{r, warning=FALSE, results=TRUE, fig.height=8, fig.width=8}
 library(leaps)
 choix <- regsubsets(Quality~., data=wine, nbest=1, nvmax=11)
+
 plot(choix, scale="adjr2", col="midnightblue")
+plot(choix, scale = "bic", col = "darkorange")
+plot(choix, scale = "Cp", col = "forestgreen")
+
 leaps <- regsubsets(Quality~., data=wine, nbest=10)
 summary(leaps)
-
 ```
+
+
+Aroma, Flavor, Oakiness semblent les variables explicatives qui reviennent selon les 3 critères. Le meilleure modèles seait alors la configuration de ces 3 variables explicattives.
+
+
+Ajuster ensuite le modèle retenu, dresser la table qui résume son ajustement puis effectuer
+une vérification des hypothèses inhérentes au modèle à l’aide des graphiques usuels.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+wine.lm2 <- lm(Quality ~ Aroma + Flavor + Oakiness, data=wine)
+model_summary2 <- summary(wine.lm2)
+print(model_summary2)
+```
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+par(mfrow=c(2,2))
+plot(wine.lm2)
+```
+
+Comme remarqué précédemment la variable Aroma a une P-valeur > 0.005. Nous nous apercevons que la variable explicative Oakiness a également une P-valeur > 0.005. L'équation résultante est donc :
+$\\\beta_{0} = 6.47$
+$\\\beta_{1} = 1.20$
+$\\\hat{y}=x * 1.20 + 6.47$
+
+Nous obtenons un $\\R{adj}$ de 0.68 ce qui signifie que 68% de la variance de la qualité du vin est capturée par les variables aroma, flavor et oakiness. Cela signifie que le modèle explique moyennement la qualité du vin.
+
+Nous observons que les résidus sont répartis de manière homogène autour de 0. Nous pouvons donc considérer que les résidus suivent une distribution normale selon le Q-Q plot. Nous pouvons également considérer que les résidus sont indépendants les uns des autres selon le graphe 'residuals vs fitted'. Nous pouvons donc considérer que les hypothèses du modèle de régression linéaire sont vérifiées.
+
+
+Utiliser la fonction compare_performance() de la librairie performance pour comparer le
+modèle retenu et le modèle de régression linéaire initial dans lequel figurent toutes les
+variables explicatives. Que peut-on conclure ?
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+library(performance)
+wine.lm <- lm(Quality ~., data = wine)
+wine.lm2 <- lm(Quality ~ Aroma + Flavor + Oakiness, data = wine)
+comp <- compare_performance(wine.lm, wine.lm2)
+
+print(comp)
+```
+Nous observons que le modèle retenu est meilleur que le modèle initial. En effet, le modèle retenu a un $\\R{adj}$ de 0.678 contre 0.677 pour le modèle initial. De plus, le modèle retenu a un AIC de 126.8 contre 125.0 pour le modèle initial. Enfin, le modèle retenu a un BIC de 138.2 contre 133.2 pour le modèle initial. Tous ces indicateurs montrent que le modèle retenu est meilleur que le modèle initial.
+
+A noter que le $\\R^2$ est légèrement plus élevé pour le modèle initial. Comme expliqué cet indicateur est monotone donc n'est pas toujours corrélé à la performance du modèle. Ici nous avons un meilleur modèle malgré un $\\R^2$ légèrement plus faible sur notre deuxième modèle.
+
+
+
+## g En utilisant le modèle retenu, donner la valeur de la qualité du vin prédite par le modèle
+en attribuant les valeurs 7.7, 6.7 et 3.7 aux variables Aroma, Flavor et Oakiness. Pour y
+parvenir, il convient d’utiliser la fonction predict().
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+new_data <- data.frame(Aroma = 7.7, Flavor = 6.7, Oakiness = 3.7)
+predict(wine.lm2, newdata = new_data)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
