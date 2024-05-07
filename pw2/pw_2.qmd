@@ -475,7 +475,7 @@ print(model_summary)
 ```
 Nous avons donc un coefficient de détermination de 0.65 et un coefficient de détermination ajusté de 0.61. Cela signifie que 65% de la variance de la taille du cerveau est expliquée par le poids du corps et la taille de la portée. Cela signifie que le modèle explique bien la taille du cerveau.
 
-Nous pouvons conclure que le modèle est significatif et capture bien la taille du cerveau. Cependant il reste 35% de la variance qui n'est pas expliquée par le modèle. Cela pourrait venir de facteurs non inclus dans les données. Le coefficient ajusté de 0.61 tient compte du nombre d'observations dans le modèle. La légère baisse par rapport au $\\R^2$
+Nous pouvons conclure que le modèle est significatif et capture bien la taille du cerveau. Cependant il reste 35% de la variance qui n'est pas expliquée par le modèle. Cela pourrait venir de facteurs non inclus dans les données. Le coefficient ajusté de 0.61 tient compte du nombre de variable dans le modèle. La légère baisse par rapport au $\\R^2$
 
 
 ## j Effectuer une vérification des hypothèses inhérentes au modèle à l’aide des graphiques
@@ -566,14 +566,46 @@ Nous avons donc un coefficient de détermination de 0.65 et un coefficient de d�
 ## e Faire une recherche bibliographique pour expliquer en utilisant vos propres mots ce que
 représentent ces critères, leur qualité et leur défaut.
 
+$\\\mathfrak{Résumé}$  $\\\mathfrak{des}$  $\\\mathfrak{Modèles}$
 
-TODO
+Coefficient de détermination ajusté $\\R^2adj$ :
+$\\R^2_{\text{adj}} = 1 - \frac{(1 - R^2) \cdot (n - 1)}{n - p - 1}$
+p = nombre de variables explicatives
+n = nombre d'observations
+un $\\R^2_{\text{adj}}$ élevé indique un modèle expliquant bien la variable réponse.
+
+Cet indicateur pénalise les modèles qui ont un grand nombre de variable explicatives non significatives. Il est donc plus fiable que le coefficient de détermination $\\R^2$ pour comparer des modèles avec un nombre différent de variables explicatives. Cependant, il est plus difficile à interpréter que le coefficient de détermination $\\R^2$.
 
 
 
+Critère d'Akaike (AIC) : 
+$\\\text{AIC} = 2k - 2\ln(L)$
+k = nombre de paramètres du modèle
+L = vraisemblance maximale du modèle
+un AIC petit indique un bon modèle
+
+Le critère d'Akaike mesure la qualité d'un modèle tout en pénalisant sa complexité. Ce critère penalise les avec trop de paramètres pour éviter le surajustement (overfitting). Cela en fait un moyen adapté pour comparer des modèles dont les paramètres sont variables. A noter que cet indicateur suppose une distribution normale des erreurs.
 
 
 
+Critère d'information Bayésien (BIC) :
+$\\\text{BIC} = k \cdot \ln(n) - 2 \ln(L)$
+k = nombre de paramètres du modèle
+n = nombre d'observations
+L = vraisemblance maximale du modèle
+un BIC petit indique un bon modèle
+
+De manière analogue à l'AIC, le BIC pénalise les modèles avec trop de paramètres. Cependant, le BIC pénalise plus fortement les modèles avec un grand nombre de paramètres. Cela en fait un indicateur plus adapté pour comparer des modèles avec un grand nombre de paramètres. Attention toutefois cet indicateur pourrait se révéler trop stricte et exclure des modèles intéressants.
+
+
+Critère de Mallows (Cp) :
+$\\C_p = \frac{\sum (y_i - \hat{y}_i)^2}{s^2} - n + 2p $
+$\\s^2$ = estimation de la variance des résidus du modèle complet
+p = nombre de variables explicatives
+n = nombre d'observations
+un $\\C_p$ proche de p indique un bon modèle
+
+Ce critère compare un modèle de régression avec un modèle qui inclurait toutes les variables possibles. Il prend en compte le biais et la variance pour évaluer la qualité du modèle. Cela en fait un outil intéressant pour détecter les modèles qui sont bien équilibrés en biais et variance. A noter que ce critère encourage également des modèles plus simples.
 
 
 
