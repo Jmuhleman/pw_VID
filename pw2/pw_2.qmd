@@ -726,40 +726,129 @@ theme_minimal()
 palettes indiquées en légende.
 
 ```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
 library(tidyverse)
 library(palmerpenguins)
-library(palettes)
+library(MetBrewer)
 
-discrete_pal <- pal_colour(c("#663171", "#EA7428", "#0C7156"))
-ggplot(data=penguins, aes(x=flipper_length_mm, y=body_mass_g)) +
-geom_point(aes(color=species,
-shape=species),
-size=3,
-alpha=0.8) +
-scale_colour_palette_d(discrete_pal) +
-labs(title = "Penguin size, Palmer Station LTER",
-subtitle = "Flipper length and body mass for Adelie, Chinstrap and Gentoo Penguins",
-x = "Flipper length (mm)",
-y = "Body mass (g)",
-color = "Penguin species",
-shape = "Penguin species",
-caption = "\n palette discrète personnelle") +
-  
-theme_minimal()
+isfahan_palette <- met.brewer("Isfahan1")
+
+color_mapping <- c(
+  "Adelie" = isfahan_palette[2],
+  "Chinstrap" = isfahan_palette[6],
+  "Gentoo" = isfahan_palette[7]
+)
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = species), size = 3, alpha = 0.8) +
+  scale_colour_manual(values = color_mapping) +
+  labs(
+    title = "Penguin size, Palmer Station LTER",
+    subtitle = "Flipper length and body mass for Adelie, Chinstrap and Gentoo Penguins",
+    x = "Flipper length (mm)",
+    y = "Body mass (g)",
+    color = "Penguin species",
+    shape = "Penguin species",
+    caption = "\n Palette discrète Isfahan1 (MetBrewer)"
+  ) +
+  theme_minimal()
+
+```
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+library(tidyverse)
+library(palmerpenguins)
+library(prettyCols) 
+
+relax_palette <- prettyCols("Relax")
+
+color_mapping <- c(
+  "Adelie" = relax_palette[1],
+  "Chinstrap" = relax_palette[2],
+  "Gentoo" = relax_palette[3]
+)
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = species), size = 3, alpha = 0.8) +
+  scale_colour_manual(values = color_mapping) +
+  labs(
+    title = "Penguin size, Palmer Station LTER",
+    subtitle = "Flipper length and body mass for Adelie, Chinstrap and Gentoo Penguins",
+    x = "Flipper length (mm)",
+    y = "Body mass (g)",
+    color = "Penguin species",
+    shape = "Penguin species",
+    caption = "\n Palette discrète Isfahan1 (MetBrewer)"
+  ) +
+  theme_minimal()
+
+```
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+library(tidyverse)
+library(palmerpenguins)
+library(harrypotter)
+
+ronweasley2_palette <- harrypotter("RonWeasley2")
+
+color_mapping <- c(
+  "Adelie" = ronweasley2_palette[1],
+  "Chinstrap" = ronweasley2_palette[2],
+  "Gentoo" = ronweasley2_palette[3]
+)
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = species), size = 3, alpha = 0.8) +
+  scale_colour_manual(values = color_mapping) +
+  labs(
+    title = "Penguin size, Palmer Station LTER",
+    subtitle = "Flipper length and body mass for Adelie, Chinstrap and Gentoo Penguins",
+    x = "Flipper length (mm)",
+    y = "Body mass (g)",
+    color = "Penguin species",
+    shape = "Penguin species",
+    caption = "\n Palette discrète Isfahan1 (MetBrewer)"
+  ) +
+  theme_minimal()
+
+```
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+library(tidyverse)
+library(palmerpenguins)
+library(paletteer)
+
+frost_palette <- paletteer_d("nord::frost")
+
+color_mapping <- c(
+  "Adelie" = frost_palette [1],
+  "Chinstrap" = frost_palette [2],
+  "Gentoo" = frost_palette [4]
+)
+ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = species), size = 3, alpha = 0.8) +
+  scale_colour_manual(values = color_mapping) +
+  labs(
+    title = "Penguin size, Palmer Station LTER",
+    subtitle = "Flipper length and body mass for Adelie, Chinstrap and Gentoo Penguins",
+    x = "Flipper length (mm)",
+    y = "Body mass (g)",
+    color = "Penguin species",
+    shape = "Penguin species",
+    caption = "\n Palette discrète Isfahan1 (MetBrewer)"
+  ) +
+  theme_minimal()
+
 ```
 
 
 
+## c À l’aide de la librairie showtext de R, on se propose dans cet exercice d’utiliser des polices
+inhérentes à Google.
 
 
-
-
-
-
-
-
-
-
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
 
 
 
