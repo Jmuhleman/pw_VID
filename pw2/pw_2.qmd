@@ -681,8 +681,72 @@ predict(wine.lm2, newdata = new_data)
 ```
 
 
+# Exercice 5
 
 
+TODO
+
+
+
+
+
+
+
+
+# Exercice 6
+
+
+## a Tracer le graphique ci-dessous en utilisant le code suivant :
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+library(tidyverse)
+library(palmerpenguins)
+library(palettes)
+
+discrete_pal <- pal_colour(c("#663171", "#EA7428", "#0C7156"))
+ggplot(data=penguins, aes(x=flipper_length_mm, y=body_mass_g)) +
+geom_point(aes(color=species,
+shape=species),
+size=3,
+alpha=0.8) +
+scale_colour_palette_d(discrete_pal) +
+labs(title = "Penguin size, Palmer Station LTER",
+subtitle = "Flipper length and body mass for Adelie, Chinstrap and Gentoo Penguins",
+x = "Flipper length (mm)",
+y = "Body mass (g)",
+color = "Penguin species",
+shape = "Penguin species",
+caption = "\n palette discrète personnelle") +
+  
+theme_minimal()
+```
+
+
+## b Reproduire les graphiques qui suivent en modifiant le code donné en a) en utilisant les
+palettes indiquées en légende.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+library(tidyverse)
+library(palmerpenguins)
+library(palettes)
+
+discrete_pal <- pal_colour(c("#663171", "#EA7428", "#0C7156"))
+ggplot(data=penguins, aes(x=flipper_length_mm, y=body_mass_g)) +
+geom_point(aes(color=species,
+shape=species),
+size=3,
+alpha=0.8) +
+scale_colour_palette_d(discrete_pal) +
+labs(title = "Penguin size, Palmer Station LTER",
+subtitle = "Flipper length and body mass for Adelie, Chinstrap and Gentoo Penguins",
+x = "Flipper length (mm)",
+y = "Body mass (g)",
+color = "Penguin species",
+shape = "Penguin species",
+caption = "\n palette discrète personnelle") +
+  
+theme_minimal()
+```
 
 
 
