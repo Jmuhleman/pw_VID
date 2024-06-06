@@ -1,0 +1,361 @@
+---
+title: "Projet Visualisation des données"
+subtitle: "Projet final" 
+author:
+  - name: Julien Muhlemann
+    email: julien.muhlemann@heig-vd.ch
+    affiliations:
+      - name: Département TIC
+highlight-style: github
+format:
+  html:
+    theme: cosmo
+    monobackgroundcolor: rgb(255,230,240)
+    backgroundcolor: rgb(250,250,250)
+    toc: true
+    toc-location: left
+    #reference-location: margin
+    reference-location: document
+    code-line-numbers: true
+  pdf:
+    theme: cosmo
+    pdf-engine: "pdflatex"
+    toc: true
+    number-sections: false
+    colorlinks: true
+    
+date: 'last-modified'
+date-format: 'D MMMM, YYYY'
+number-sections: false
+editor: 
+  visual
+---
+
+# Projet Visualisation des données (VID)
+
+## Introduction
+
+Le jeu de données de crédit allemand comprend 1000 demandes de crédit passées, chacune décrite par 30 variables. L'objectif principal de cette analyse est d'identifier les caractéristiques pouvant déterminer la solvabilité des nouveaux demandeurs, classés comme des risques de crédit "Bons" ou "Mauvais". Ce rapport détaillera les caractéristiques des données, la méthodologie employée pour l'analyse et les conclusion sur le choix des variables expicatives les plus pertinentes pour la prédiction de la solvabilité des demandeurs.
+
+## Description des données
+
+Le jeu de données se compose des éléments suivants :
+- Nombre d'instances : 1000
+- Nombre d'attributs : 30
+- variable de réponse : RESPONSE (0 = Mauvais, 1 = Bon)
+
+
+## Analyse exploratoire des données
+
+Le jeu de donnée complet est chargé et les variables sont séparées en deux groupes : les variables catégorielles et les variables numériques.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+
+german_credit <- read.csv("GermanCredit.csv", header=TRUE, sep=';')
+# suppression du numéro d’observation
+
+quanti <- c(3, 11, 14, 23)
+categorical_data <- german_credit[-quanti]
+numeric_data <- german_credit[quanti]
+categorical_data <- categorical_data[-1]
+
+for (col in names(categorical_data)) {
+  categorical_data[[col]] <- factor(categorical_data[[col]])
+}
+
+for (col in names(numeric_data)) {
+  numeric_data[[col]] <- as.numeric(numeric_data[[col]])
+}
+
+```
+
+
+Contrôle de la validité des données:
+
+Il convient de vérifier l'intégrité et la validité des données fournies. Pour ce faire, nous vérifions la présence de valeurs aberrantes dans les données.
+
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+par(mfrow = c(5, 5))
+for (col in names(categorical_data)) {
+    barplot(table(categorical_data[[col]]), main = paste(":", col), col = "orange", border = "black")
+}
+```
+Nous découvrons 3 principales aberrations:
+1. MALE_SINGLE qui contient un '2'
+2. GUARANTOR qui contient un '-1'
+3. PRESENT_RESIDENT qui a une plage de valeurs de 1 à 4
+
+
+
+
+Il convient maintenant de vérifier la distribution des variables numériques.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+library(ggplot2)
+par(mfrow = c(1, 1))
+
+p <- ggplot(stack(numeric_data), aes(x = ind, y = values)) +
+     geom_boxplot(fill = "orange", color = "black") +
+     labs(x = NULL, y = NULL) +
+     theme_minimal() +
+     theme(axis.text.x = element_text(angle = 90, hjust = 1),
+           axis.ticks.x = element_blank())
+
+print(p + facet_wrap(~ind, scales = "free"))
+```
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+par(mfrow = c(2,2))
+
+for (col in names(numeric_data)) {
+    hist(numeric_data[[col]], main = paste(":", col), xlab = col, col = "orange", border = "black")
+}
+par(mfrow = c(1, 1))
+
+```
+
+Nous découvrons 2 principales aberrations:
+1. AGE qui contient des valeurs supérieures à 100
+2. DURATION qui contient des valeurs négatives
+
+
+
+
+Afin de corriger ces valeurs aberrantes, nous allons procéder à l'imputation.
+
+
+
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+numeric_data$AGE[numeric_data$AGE > 100 ] <- 75
+numeric_data$DURATION[numeric_data$DURATION < 0] <- 0
+
+##passage en format numérique
+categorical_data$PRESENT_RESIDENT <- as.numeric(categorical_data$PRESENT_RESIDENT)
+
+##remplacement des valeurs
+categorical_data$MALE_SINGLE[categorical_data$MALE_SINGLE == 2] <- 1
+categorical_data$GUARANTOR[categorical_data$GUARANTOR == -1] <- 1
+categorical_data$PRESENT_RESIDENT <- categorical_data$PRESENT_RESIDENT - 1
+
+#passage en format catégorique
+categorical_data$MALE_SINGLE <- as.factor(categorical_data$MALE_SINGLE)
+categorical_data$GUARANTOR <- as.factor(categorical_data$GUARANTOR)
+categorical_data$PRESENT_RESIDENT <- as.factor(categorical_data$PRESENT_RESIDENT)
+
+# passage en format numérique et catégorique
+for (col in names(categorical_data)) {
+  categorical_data[[col]] <- factor(categorical_data[[col]])
+}
+
+for (col in names(numeric_data)) {
+  numeric_data[[col]] <- as.numeric(numeric_data[[col]])
+}
+
+```
+
+
+
+## Imputation des valeurs manquantes
+
+Il est important de vérifier la présence de valeurs manquantes dans les données
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+#détection des valeurs manquantes
+missing_numeric <- sapply(numeric_data, function(x) sum(is.na(x)))
+missig_catego <- sapply(categorical_data, function(x) sum(is.na(x)))
+print(paste("valeurs manquantes numeriques: ",missing_numeric))
+print(paste("valeurs manquantes catégoriques: ",missig_catego))
+
+```
+
+
+Nous observons que la variable AGE contient des valeurs manquantes. Nous allons procéder à l'imputation de ces valeurs manquantes en utilisant la médiane de la variable AGE.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+numeric_data$AGE[is.na(numeric_data$AGE)] <- median(numeric_data$AGE, na.rm = TRUE)
+
+```
+
+
+
+## Visualisation des données catégorielles et de leur corrélations selon la variable réponse.
+
+
+Il peut être intéressant de visualiser les données catégorielles sous forme de matrice de corrélation. Il est possible d'utiliser le coefficient V de Cramer pour mesurer la corrélation entre deux variables catégorielles. La matrice de corrélation obtenue peut être visualisée à l'aide d'un graphique de corrélation. Les valeurs seront situées entre 0 et 1: 1 pour une corrélation parfaite, 0 pour aucune corrélation.
+
+Source: https://www.scribbr.de/statistik/cramers-v/
+
+
+
+
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+library(vcd)
+library(corrplot)
+
+# Fonction pour calculer le V de Cramer
+cramers_v <- function(x, y) {
+  tbl <- table(x, y)
+  chi2 <- chisq.test(tbl)$statistic
+  n <- sum(tbl)
+  phi2 <- chi2 / n
+  k <- min(dim(tbl)) - 1
+  return(sqrt(phi2 / k))
+}
+
+# Initialiser la matrice des corrélations
+categorical_cols <- names(categorical_data)
+n <- length(categorical_cols)
+corr_matrix <- matrix(NA, n, n)
+rownames(corr_matrix) <- categorical_cols
+colnames(corr_matrix) <- categorical_cols
+
+# Remplir la matrice avec Cramér's V
+for (i in 1:n) {
+  for (j in i:n) {
+    v <- cramers_v(categorical_data[[i]], categorical_data[[j]])
+    corr_matrix[i, j] <- v
+    corr_matrix[j, i] <- v
+  }
+}
+
+# Visualiser la matrice de corrélation avec corrplot
+corrplot(corr_matrix, method = "color", type = "upper", 
+         tl.col = "black", tl.srt = 45, 
+         title = "Matrice des Corrélations (V de Cramer) des Variables Catégorielles")
+
+```
+Nous visualisons différentes corrélations selon le test V de Cramer (racine carrée du rapport entre le test du chi-carré et le nombre d'échantillon) entre les variables. Puisque nous observons des variables catégorielles les valeurs des corrélations ne sont à interpréter que manière positive i.e. RENT et OWN_RES sont corrélées positivement mais l'un reflète l'inverse de l'autre puisque de manière logique les gens qui possède une résidence ne la loue pas. 
+
+Nous pouvons noter trois variables explicatives qui semblent être les plus corrélées avec RESPONSE.
+1. CHK_ACCT
+2. HISTORY
+3. SAV_ACCT
+
+Il est également intéressant de visualiser les memes données catégorielles avec un bar plot empilé (stacked baplot). Celui-ci nous montrera la proportion de chaque catégorie pour chaque variable catégorielle en fonction de la variable réponse. 
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=15}
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+categorical_data$RESPONSE <- as.factor(categorical_data$RESPONSE)
+
+categorical_data_long <- categorical_data %>%
+  pivot_longer(cols = -RESPONSE, names_to = "Variable", values_to = "Category") %>%
+  mutate(Category = factor(Category))  # Ensure categories are factors
+
+p <- ggplot(data = categorical_data_long, aes(x = Category, fill = RESPONSE)) +
+  geom_bar(position = "fill", color = "black") +
+  scale_fill_manual(values = c("0" = "#FF9999", "1" = "#9999FF"), name = "Response") +
+  facet_wrap(~ Variable, scales = "free_x", nrow = 4) +  # Limit to 4 variables per row
+  ggtitle("Distribution of Response Variable by Categorical Variables") +
+  xlab("Category") +
+  ylab("Proportion") +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold"),
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_text(size = 10),
+    strip.text = element_text(size = 12)
+  )
+print(p)
+
+```
+
+
+Nous cherchons dans les diagrammes en barres les différences significatives entre les 2 classes de la variable réponse. Nous pouvons voir que les variables CHK_ACCT, HISTORY et SAV_ACCT semblent être les plus significatives. Nous allons donc les analyser plus en détail.
+
+
+
+
+Il convient maintenant de visualiser les données numériques. Nous allons utiliser des diagrammes en violon pour visualiser la distribution des variables numériques en fonction de la variable réponse. Les diagrammes en violon sont similaires aux boîtes à moustaches, mais ils montrent également la densité de probabilité des données à différentes valeurs. Nous allons également ajouter des points de données pour chaque observation pour mieux visualiser la distribution.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+library(ggplot2)
+
+# séléction de la variable de réponse en nom pluss court
+response <- as.factor(categorical_data$RESPONSE)
+
+for (col in names(numeric_data)) {
+  print(
+    ggplot(data = german_credit, aes(x = response, y = numeric_data[[col]], fill = response)) +
+      geom_violin(trim = FALSE, color = "black", alpha = 0.6) +
+      geom_jitter(shape = 16, position = position_jitter(0.2), alpha = 0.4, size = 1.5) +
+      scale_fill_manual(values = c("0" = "#FF9999", "1" = "#9999FF")) +
+      ggtitle(paste("Diagramme en violon", col, "selon variable réponse")) +
+      xlab("Réponse") +
+      ylab(col) +
+      theme_minimal(base_size = 15) +
+      theme(
+        plot.title = element_text(hjust = 0.5, face = "bold"),
+        axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 12),
+        legend.position = "none"
+      )
+  )
+}
+
+```
+
+
+Nous pouvons voir que la variable DURATION semble être la plus significative pour prédire la variable réponse. Les clients qui ont un DURATION plus élevé semblent être plus susceptibles de ne pas rembourser leur prêt. Nous pouvons également voir que les clients qui sont légèrement plus agés semble être de meilleurs clients. Néanmoins, il est important de noter que les différences ne sont pas très significatives.
+
+
+
+
+
+## Utilisation de la régression logistique pour prédire la variable réponse
+
+Nous pouvons utiliser la régression logistique pour prédire la variable réponse. Nous allons d'abord concaténer les données catégorielles et numériques. Nous allons ensuite utiliser la régression logistique pour prédire la variable réponse en utilisant toutes les variables.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+# recherche des meilleures variable pour régression linéaire
+# concaténation des deux dataframes
+
+combined_data <- cbind(categorical_data, numeric_data)
+model <- glm(combined_data$RESPONSE ~ ., data=categorical_data, family=binomial)
+
+summary(model)
+
+```
+
+Nous obtenons quatre variables significatives (p-valeur < 0.001) pour prédire la variable réponse. CHECK_ACCOUNT 2 et 3 et HISTORY_4. 
+Comme nous l'avions noté précédemment avec la matrice des corrélation du V de cramer ces variables sont les plus intéressantes pour prédire si un client est un bon client. Il est à noter que SAVE_ACCOUNT n'est pas aussi significative (p-valeur < 0.05) que nous aurions pu le croire selon les couleurs du graphe.
+
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}  
+
+# régression avec les variables numériques
+model <- glm(combined_data$RESPONSE ~ ., data=numeric_data, family=binomial)
+summary(model)
+
+```
+
+Pour la régression logistique avec les variables numériques, nous obtenons la variable DURATION significative à p-valeur < 0.001. Il est intéressant de mentionner que la variable AGE et INSTALL_RATE sont toutes les deux significative à p-valeur < 0.05. Il est à noter que les mauvais clients ont tendance à demander des prêts plus élevés variable AMOUNT. 
+
+
+## Conclusion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

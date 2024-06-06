@@ -1,0 +1,55 @@
+---
+title: Visualisation des données
+title-slide-attributes:
+  data-background-size: contain
+  data-background-opacity: "1"
+  data-background-image: backg.jpg
+
+format:
+  revealjs:
+    theme: default
+    transition: slide
+    background-transition: fade
+    transition-speed: slow
+    slideNumber: true
+    controls: true
+    progress: true
+    history: true
+    center: false
+    width: 960
+    height: 700
+    margin: 0.1
+    minScale: 0.2
+    maxScale: 2.0
+---
+
+## [Introduction]{style="color:black;"} {background-image=backg.jpg}
+
+
+## [Objectifs]{style="color:black;"}{background-image=backg.jpg}
+
+
+## [Méthodologie]{style="color:black;"}{background-image=backg.jpg}
+
+
+
+
+## [Analyse exploratoire des données]{style="color:black;"}{.absolute top=0 right=0 background-image=backg.jpg}
+
+
+## [Synthèse]{style="color:black;"}{background-image=backg.jpg}
+
+
+## [Questions & Réponses]{style="color:black;"}{background-image=backg.jpg}
+
+ 
+
+
+
+
+
+
+
+
+
+
