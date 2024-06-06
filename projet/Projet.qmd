@@ -267,6 +267,9 @@ p <- ggplot(data = categorical_data_long, aes(x = Category, fill = RESPONSE)) +
   )
 print(p)
 
+# custom_theme <- theme_minimal() + theme(plot.background = element_rect(fill = "lightgray"))
+ggsave("barplot.png", plot = last_plot(),width = 15, height = 10, units = "in", dpi = 300)  
+
 ```
 
 
@@ -345,12 +348,20 @@ Pour la régression logistique avec les variables numériques, nous obtenons la 
 ## Conclusion
 
 
+Il a été intéressant de comprendre les facteurs qui influences le plus la probabilité de remboursement d'un prête dans le contexte bancaire. En effet, les données issues d'une situation réelle ce qui est très motivant en tant qu'ingénieur des données puisque étant personnellement intéressé par le domaine financier.
+
+Il n'est pas surprenant de constater que des facteurs tel que le solde d'un compte de chèque, l'historique de crédit d'un client ou la durée du prêt soient des facteurs significatifs pour prédire si un client est un bon client.
+
+Afin de pousser l'analyse plus loin, il serait possible de faire de l'ingénierie de caractéristiques afin de créer de nouvelles variables qui pourraient être plus significatives pour prédire la variable réponse. Introduire des date ou périodes de l'année par exemple.
+
+Il serait également possible d'utiliser un réseau de neurones ou autres algorithmes d'apprentissage afin de prédire la variable réponse. Il serait, enfin, aussi intéressant d'utiliser des métriques de performance plus avancées telles que le F-score le rappel ou la précision. Avec une validation croisée par exemple.
 
 
-
-
-
-
+```{r, warning=FALSE, results=TRUE, fig.height=10, fig.width=10}
+for (i in 1:10) {  # Remplacez 10 par le nombre total de graphiques
+  ggsave(paste0("figure_", i, ".png"), width = 10, height = 10, units = "in", dpi = 300)  # Modifiez les paramètres selon vos besoins
+}
+```
 
 
 

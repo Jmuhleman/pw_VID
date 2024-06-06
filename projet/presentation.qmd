@@ -25,7 +25,7 @@ format:
 
 ## [Introduction]{style="color:black;"} {background-image=backg.jpg}
 
-
+![](figure_10.png)
 ## [Objectifs]{style="color:black;"}{background-image=backg.jpg}
 
 
